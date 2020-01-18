@@ -12,6 +12,7 @@ type State = {
         url: string;
     }> | null;
     tabs: {
+        key:string
         text: string;
         tree: Tree<{
             url: string;
@@ -22,11 +23,11 @@ const state: State = {
     index: '/md/index.md',
     current: null,
     tabs: [
-        { text: '工具库', tree: toolData },
-        { text: '组件', tree: componentData },
-        { text: '布局', tree: layoutData },
-        { text: '讨论', tree: issueData },
-        { text: '博客', tree: blogData },
+        { key:'tool', text: '工具库', tree: toolData },
+        { key:'component',text: '组件', tree: componentData },
+        { key:'layout',text: '布局', tree: layoutData },
+        { key:'issue',text: '讨论', tree: issueData },
+        { key:'blog',text: '博客', tree: blogData },
     ]
 }
 

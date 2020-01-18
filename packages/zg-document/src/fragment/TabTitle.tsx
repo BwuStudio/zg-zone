@@ -12,7 +12,7 @@ const TabTitle: React.FC = () => {
     }
     onStateChange.map(v => v.current).listen(v => setCur(v))
     return <ol className='tab_title'>{
-        list.map(v => <li className={'tab_title--li' + (isCheck(v.tree, cur) ? ' tab_title--li__check' : '')} onClick={() => {
+        list.map(v => <li key={v.key} className={'tab_title--li' + (isCheck(v.tree, cur) ? ' tab_title--li__check' : '')} onClick={() => {
             state.current = v.tree
             onStateChange.emit(state)
         }}>{v.text}</li>)
