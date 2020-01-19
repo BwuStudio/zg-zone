@@ -1,0 +1,89 @@
+<div class="sf-modal-mask"></div>
+<div class="sf-modal-window">
+    <div class="sf-modal-window-header">
+        <span class="sf-modal-window-title">${title}</span>
+        <span class="sf-modal-window-close">X</span>
+    </div>
+    <div class="sf-modal-window-body"></div>
+    <div class="sf-modal-window-move-mask" unselectable="on"></div>
+</div>
+
+<style>
+    .sf-modal-mask {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background: #666;
+        opacity: 0.4;
+        filter: alpha(opacity=40);
+    }
+
+    .sf-modal-window {
+        user-select: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 300px;
+        width: 400px;
+        margin-left: -200px;
+        margin-top: -150px;
+        background: #fff;
+        padding-top: 32px;
+    }
+
+    .sf-modal-window-header {
+        
+        user-select: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 32px;
+        background: #0a5897;
+        line-height: 32px;
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 6px;
+        color: #fff;
+        cursor: move;
+    }
+
+    .sf-modal-window-body {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        user-select: none;
+    }
+
+    .sf-modal-window-body * {
+        box-sizing: border-box;
+    }
+
+    .sf-modal-window-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 32px;
+        line-height: 32px;
+        font-weight: normal;
+        transform: scaleY(0.8);
+        transform-origin: center;
+        padding: 0 10px;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+
+    .sf-modal-window-title {
+        user-select: none;
+    }
+
+    .sf-modal-window-move-mask {
+        user-select: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
