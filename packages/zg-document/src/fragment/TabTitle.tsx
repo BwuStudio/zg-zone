@@ -3,26 +3,23 @@ import { InjCss } from '../utils/injcss'
 import Tree from '../utils/Tree'
 
 type Props = {
-    cur:Tree<{ url: string }> | null,
+    cur: Tree<{ url: string, title: string }> | null,
     list: {
         key: string;
         text: string;
         tree: Tree<{
-            url: string;
+            url: string, title: string
         }>
     }[],
-    changeTo:(tree:Tree<{ url: string }>)=>void
+    changeTo: (tree: Tree<{ url: string, title: string }> | null) => void
 }
 
-const TabTitle: React.FC<Props> = (props:Props) => {
+const TabTitle: React.FC<Props> = (props: Props) => {
 
-    const isCheck = (v: Tree<{ url: string }>, cur: Tree<{ url: string }> | null) => {
-        return v === cur
-    }
-    const {cur,list,changeTo} = props
+    const { cur, list, changeTo } = props
 
     return <ol className='tab_title'>{
-        list.map(v => <li key={v.key} className={'tab_title--li' + (isCheck(v.tree, cur) ? ' tab_title--li__check' : '')} onClick={() => {
+        list.map(v => <li key={v.key} className={'tab_title--li' + (v.tree.exist(cur) ? ' tab_title--li__check' : '')} onClick={() => {
             changeTo(v.tree)
         }}>{v.text}</li>)
     }</ol>
@@ -51,13 +48,13 @@ InjCss.gen('tab_title', {
         fontSize: '18px',
         transition: 'all 0.2s ease-out',
         position: 'relative',
-        fontWeight:'bold',
+        fontWeight: 'bold',
         textShadow: '0 3px 3px rgba(0,0,0,0.3)',
         backgroundColor: 'rgba(255,255,255,0)'
     },
     'li.tab_title--li__check': {
         color: '#393e46',
-        lineHeight:'60px',
+        lineHeight: '60px',
         backgroundColor: 'rgba(255,255,255,0.5)'
     },
     'li.tab_title--li::after': {

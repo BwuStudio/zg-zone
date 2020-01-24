@@ -6,11 +6,11 @@ import Tree from '../utils/Tree'
 import TabTitle from './TabTitle'
 
 const TopBar: React.FC = () => {
-  const [cur, setCur] = useState<Tree<{ url: string }> | null>(state.current)
+  const [cur, setCur] = useState<Tree<{ url: string, title: string }> | null>(state.current)
 
   const list = state.tabs
 
-  const changeTo = (v: Tree<{ url: string }> | null) => {
+  const changeTo = (v: Tree<{ url: string, title: string }> | null) => {
     state.current = v
     onStateChange.emit(state)
   }
@@ -44,14 +44,15 @@ InjCss.gen('topBar', {
     lineHeight: "72px",
     color: '#333',
     padding: '0 20px',
-    fontWeight:'normal',
-    transition:'all 0.3s ease-out',
+    fontWeight: 'normal',
+    transition: 'all 0.3s ease-out',
     textShadow: '0 3px 3px rgba(0,0,0,0.3)',
     cursor: "pointer"
   },
   '.logo.focus': {
-    fontWeight:'bold',
-    color: '#556',
+    fontWeight: 'bold',
+    color: '#445',
+    textShadow: '3px 3px 0 rgba(0,0,0,0.3)',
   },
 })
 
