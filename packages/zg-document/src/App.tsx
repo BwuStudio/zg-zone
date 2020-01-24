@@ -1,22 +1,24 @@
 import React from 'react';
 import { InjCss } from './utils/injcss';
 import TopBar from './fragment/TopBar'
-import Container from './fragment/container'
+import Document from './fragment/document'
+import Calalog from './fragment/catalog';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <TopBar />
-      <Container />
+      <Document />
+      <Calalog />
     </div>
   );
 }
 
-InjCss.gen('App',{
-  '':{
-    height:'100%',
-    width:'100%',
-    display:'flex',
+InjCss.gen('App', {
+  '': {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
     flexDirection: 'column',
   }
 })

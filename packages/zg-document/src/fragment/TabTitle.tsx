@@ -1,20 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { InjCss } from '../utils/injcss'
-import { state, onStateChange } from '../state/index'
 import Tree from '../utils/Tree'
 
-const TabTitle: React.FC = () => {
+type Props = {
+    cur:Tree<{ url: string }> | null,
+    list: {
+        key: string;
+        text: string;
+        tree: Tree<{
+            url: string;
+        }>
+    }[],
+    changeTo:(tree:Tree<{ url: string }>)=>void
+}
 
-    const [cur, setCur] = useState<Tree<{ url: string }> | null>(state.current)
-    const list = state.tabs
+const TabTitle: React.FC<Props> = (props:Props) => {
+
     const isCheck = (v: Tree<{ url: string }>, cur: Tree<{ url: string }> | null) => {
         return v === cur
     }
-    onStateChange.map(v => v.current).listen(v => setCur(v))
+    const {cur,list,changeTo} = props
+
     return <ol className='tab_title'>{
         list.map(v => <li key={v.key} className={'tab_title--li' + (isCheck(v.tree, cur) ? ' tab_title--li__check' : '')} onClick={() => {
-            state.current = v.tree
-            onStateChange.emit(state)
+            changeTo(v.tree)
         }}>{v.text}</li>)
     }</ol>
 }
@@ -34,19 +43,22 @@ InjCss.gen('tab_title', {
         margin: '0',
         padding: '0 20px',
         height: '60px',
-        lineHeight: '60px',
+        lineHeight: '65px',
         listStyle: 'none',
-        color: 'rgba(255,255,255,0.9)',
+        color: 'rgba(255,255,255,1)',
+        // color: '##706c61',
         cursor: 'pointer',
         fontSize: '18px',
         transition: 'all 0.2s ease-out',
         position: 'relative',
+        fontWeight:'bold',
+        textShadow: '0 3px 3px rgba(0,0,0,0.3)',
         backgroundColor: 'rgba(255,255,255,0)'
     },
     'li.tab_title--li__check': {
-        color: '#A9DEF9',
-        textShadow: '0 3px 3px rgba(0,0,0,0.3)',
-        backgroundColor: 'rgba(255,255,255,0.1)'
+        color: '#393e46',
+        lineHeight:'60px',
+        backgroundColor: 'rgba(255,255,255,0.5)'
     },
     'li.tab_title--li::after': {
         content: '""',
@@ -56,7 +68,8 @@ InjCss.gen('tab_title', {
         right: '0',
         transition: 'all 0.2s ease-out',
         height: '0',
-        backgroundColor: '#A9DEF9'
+        backgroundColor: '#393e46',
+        boxShadow: '0 1px 3px 0 rgba(0,0,0,0.5)',
     },
     'li.tab_title--li__check::after': {
         height: '4px',
