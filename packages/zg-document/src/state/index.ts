@@ -15,7 +15,8 @@ type State = {
         key:string
         text: string;
         tree: Tree<{
-            url: string;
+            url: string
+            title: string
         }>;
     }[];
 }

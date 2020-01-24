@@ -5,3 +5,4 @@ export interface Functor<T> {
 export interface Monad<T> {
     flatMap<S>(fn: (v: T) => Monad<S>): Monad<S>
 }
+

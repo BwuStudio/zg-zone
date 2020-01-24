@@ -4,7 +4,7 @@ import { InjCss } from '../utils/injcss';
 const Calalog: React.FC = () => {
     return <div className="calalog">
         <div className="calalog-hidden_scrollbar">
-            <Tree focus={'1'} list={[{
+            <TreeList focus={'1'} list={[{
                 title: '1231',
                 id: '1',
                 children: [{
@@ -52,7 +52,7 @@ const Calalog: React.FC = () => {
                 title: '1231',
                 id: 'c',
                 children: []
-            }]}></Tree>
+            }]}></TreeList>
 
         </div>
 
@@ -64,15 +64,17 @@ type TreeItem = {
     id: string,
     children: TreeItem[]
 }
-const Tree: React.FC<{ list: TreeItem[], focus: string }> = (props: { list: TreeItem[], focus: string }) => {
+const TreeList: React.FC<{ list: TreeItem[], focus: string, level?: number }> = (props) => {
 
-    return <ol className="cl_tree">
-        {props.list.map(v => <li data-focus={props.focus === v.id ? true : false}>
+    const { list, level = 0, focus } = props
+
+    return <ol className="cl_tree" style={{ paddingLeft: level * 20 + 'px' }}>
+        {list.map(v => <li data-focus={focus === v.id ? true : false}>
             <div className="cl_tree-title">{v.title}</div>
             {
                 v.children.length === 0
                     ? ''
-                    : <Tree focus={props.focus} list={v.children} />
+                    : <TreeList focus={focus} list={v.children} level={level + 1} />
             }
         </li>)}
     </ol>
@@ -96,13 +98,13 @@ InjCss.gen('calalog', {
     '.cl_tree': {
         listStyle: 'none',
         padding: '0',
-        paddingLeft: '20px',
+        // paddingLeft: '20px',
     },
     '.cl_tree-title': {
         padding: '4px 0',
     },
-    'li[data-focus="true"] > .cl_tree-title':{
-        fontWeight:'bolder'
+    'li[data-focus="true"] > .cl_tree-title': {
+        fontWeight: 'bolder'
     }
 })
 
