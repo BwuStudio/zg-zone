@@ -29,7 +29,7 @@ InjCss.gen('tab_title', {
     '': {
         float: 'left',
         height: '60px',
-        lineHeight: '60px',
+        lineHeight: '60px', 
         listStyle: 'none',
         color: 'white',
         margin: '0',
@@ -49,7 +49,7 @@ InjCss.gen('tab_title', {
         transition: 'all 0.2s ease-out',
         position: 'relative',
         fontWeight: 'bold',
-        textShadow: '0 3px 3px rgba(0,0,0,0.3)',
+        textShadow: '0 3px 3px rgba(0,0,0,0.2)',
         backgroundColor: 'rgba(255,255,255,0)'
     },
     'li.tab_title--li__check': {

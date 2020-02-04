@@ -23,6 +23,11 @@ body{
   margin: 0;
   padding: 0;
   padding-top: 60px;
+  background-color: rgb(247, 247, 247)
+}
+
+html{
+  height: 100%;
 }
 
 #root{

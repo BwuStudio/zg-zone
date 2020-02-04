@@ -8,12 +8,13 @@ const Document: React.FC = () => {
     const [count, SetCount] = useState(0)
     const [html, setHTML] = useState('')
 
-    mdloader(state.index).then(s => setHTML(s))
+    // mdloader(state.index).then(s => setHTML(s))
 
     useListener(onStateChange)
         .map(v => v.current)
         .map(v => v ? v.get().url : v)
         .on(v => {
+            console.log(v)
             if (v) mdloader(v).then(s => setHTML(s))
         })
 
@@ -24,6 +25,10 @@ const Document: React.FC = () => {
             dangerouslySetInnerHTML={{ __html: html }}
         >
         </div>
+
+        <div
+            className = "background"
+        ></div>
     </div>
 }
 
@@ -31,27 +36,32 @@ const Document: React.FC = () => {
 InjCss.gen('document', {
     '': {
         width: '100%',
-        backgroundColor: 'rgb(247, 247, 247)',
         overflowY: 'hidden',
         minHeight:'100%',
     },
     '.content': {
-        // width:'800px',   
-        backgroundColor: 'white',
         minHeight: '100%',
         position: 'relative',
         marginRight: "500px",
+        zIndex:'1',
         padding: '60px',
-        // left:'0',
-        // transform:'translate(0,0)',
         transition: 'all 0.3s ease-out',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     },
     '.content.focus': {
-        // left:'50%',
         marginRight: "0",
-        // backgroundColor:'transparent',
-        // transform:'translate(-50%,0)',
+    },
+    '.background': {
+        transition: 'all 0.3s ease-out',
+        position:"fixed",
+        left:'0',
+        top:'0',
+        bottom:"0",
+        right:"500px",
+        backgroundColor: 'white',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    },
+    '.content.focus + .background':{
+        right:"0",
         boxShadow: '0 2px 4px rgba(0,0,0,0)'
     }
 })

@@ -34,7 +34,7 @@ InjCss.gen('topBar', {
     position: 'fixed',
     padding: '0 40px',
     top: '0',
-    zIndex: '1',
+    zIndex: '2',
     backgroundColor: "#d6e5fa"//'#353535',
   },
   '.logo': {
