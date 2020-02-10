@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run dev_document & npm run dev_libis",
+    "dev_document": "cd ./packages/zg-document && npm start",
+    "dev_libis": "cd ./packages/zg-libis && npm start "
   },
   "author": "",
   "license": "ISC",

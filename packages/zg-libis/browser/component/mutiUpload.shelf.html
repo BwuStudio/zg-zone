@@ -1,0 +1,38 @@
+<div class="sf-mutiUpload-file">
+
+    <table class="list_table">
+        <tr class="control_width">
+            <td ${'style="width:'+ titleWidth + 'px"'}></td>
+        <td></td>
+    </tr>
+    <!--if(batchDownload)-->
+        <tr>
+            <th colspan="2" style="text-align: right;padding-right: 8px;">
+                 <a class="block_btn upload_btn">批量下载</a>
+            </th>
+        </tr>
+    <!--else(true)-->
+        
+    <!--finish-->
+
+    <!--loop(list)-->
+        <!--if(_item.cid)-->
+        <tr>
+            <td  class="sf-upload-file-title" style="padding: 8px 16px;">${_item.title}</td>
+            <td><div class="mu_cntr_${_item.cid}"></div></td>
+        </tr>
+        <!--else(true)-->
+        <tr>
+            <td class="sf-upload-file-title" colspan=' 2' style="padding: 8px 16px;">${_item.title}</td>
+        </tr>
+        <!--finish-->
+        <!--end-->
+    </table>
+</div>
+
+<style>
+    .sf-upload-file-title {
+        background-color: #f6f5fb;
+        padding: 8px 16px;
+    }
+</style>

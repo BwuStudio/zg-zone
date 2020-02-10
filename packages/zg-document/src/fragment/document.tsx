@@ -5,7 +5,7 @@ import { state, onStateChange } from '../state/index'
 import { useListener } from '../utils/Event';
 
 const Document: React.FC = () => {
-    const [count, SetCount] = useState(0)
+    const [focus, setFocus] = useState(true)
     const [html, setHTML] = useState('')
 
     // mdloader(state.index).then(s => setHTML(s))
@@ -14,14 +14,13 @@ const Document: React.FC = () => {
         .map(v => v.current)
         .map(v => v ? v.get().url : v)
         .on(v => {
-            console.log(v)
-            if (v) mdloader(v).then(s => setHTML(s))
+            if (v) mdloader(v).then(s => {setHTML(s) ;setFocus(false)})
+            else mdloader(state.index).then(s =>  {setHTML(s) ;setFocus(true)})
         })
 
     return <div className='document'>
         <div
-            className={'markdown-body content' + (count % 2 === 0 ? '' : ' focus')}
-            onClick={() => { SetCount(count + 1) }}
+            className={'markdown-body content' + (focus ? ' focus' : '')}
             dangerouslySetInnerHTML={{ __html: html }}
         >
         </div>
@@ -57,11 +56,12 @@ InjCss.gen('document', {
         top:'0',
         bottom:"0",
         right:"500px",
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(255,255,255,1)',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     },
     '.content.focus + .background':{
         right:"0",
+        backgroundColor: 'rgba(255,255,255,0)',
         boxShadow: '0 2px 4px rgba(0,0,0,0)'
     }
 })
