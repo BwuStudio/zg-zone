@@ -31,7 +31,7 @@ type State = {
 }
 
 const state: State = {
-    index: '/md/index.md',
+    index: './md/index.md',
     current: null,
     tabs: [
         { key: 'tool', text: '工具库', url: toolData, tree: Tree.gen({ title: '', doc: document.createElement('div'), target: null }) },
