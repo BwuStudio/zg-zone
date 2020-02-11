@@ -1,0 +1,25 @@
+@font-face {font-family: "zg";
+  src: url('iconfont.eot?t=1579802257348'); /* IE9 */
+  src: url('iconfont.eot?t=1579802257348#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQQAAsAAAAACCAAAAPDAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqEUIN6ATYCJAMMCwgABCAFhCUHOBv6BhFVnJ/IfiQYN45/7BIbMXCixO6D57+23u4rCkKKb0JHxJU+WaWJq42IbacZAy4ZADdZ9a1NO7ZREYolOU/9mI6R3xAupNO6Gl3h6xP3Tv9qETwQaIyNYy5MOIKxFnUBBxRI4lkC2jB25UUchgCGfJRBmjRr0wUXjTFKABkzcvhA3JQRXZMtuAhOyUI9SZZh46qF6hGw1H+//EIlcUFhWxgTOwxrOoQG3+f+PrCCeEAfl0A0nh1gy8ACygAapF+pswdWGCqDhVGUuj7ZQSOosbzxOPhCVe6Yf3igEBAHIzMBgBIorOD73LYwVgVQfNaim3M4oGTwBPhW12b0vdgt5mcU0BkmZ57M2dG14WrUtldNkmIXrhwRe+fb5om5rYNVJmHXpTx6/eWiyWev5u4/ZVVsTTR7unEL1nqJuy9HVAC/mPT2Te6DjW+KxJrk9vx1Da5B2PulFxb1z5jYK4LXXri3+AaJ5srlrXoFu0zsTXSg3yR31z4PHBw8i72Q6MvweZnoldil4HJ4tauJdnuTy2wmyGu2RvN5QcPrEW+LhPpNQXfFVsif5dL1hMXZY4JIWLli4P2W9ZnX1m7efGDlyDeV60UqZ8n3dmjrfZb1udf2zwtUTr74Z2UOJg+7kZY2LeP/jOmpaf9VhPjzYjIdfwDCzjlmprjZrR2Vf4E9Wf7zczuS92j+yV3ynm3xIatZ156Nu3br3DllkMqslJRp5zHSLU/qxcq9Bvfdt/5Q6nF5W53z3NJ5aa3KNW2aWqq8E5+2qEj3CjVb2K9U67MaGVbZBuUbD1QF/Qr5/bJDi+TWB592klS/SoafOeSsryfmrloxc5QeWNouVvR55p+FiySXZwAA8VuPrbYAdke1+69/huoPt43on1znP9fTAHxoH1/uu+K3O7YPe10UMNE/DqSjEaNIVYlhsrSspLZaAItluG8wHYMB/mwuQBr//trM9xgRFJkxFDnIhoUiH6lZBWDjUQgOirIwlCZe7pHOzRTROYFStACCZi0USWyEhWY/qVmHYZPFFw6auzB089vQo5gUNI0ZS8EGqjfYmjpldZbN9A71PZT80eYJJ+TBUgdplHz0FjvktlOGh85EFCimFopOx2EIBD2Tw1oiI9LncazKnhTV1I42NMZQSaAGUHkDrBrpKLeb2DCLtoPAfhewknMCu/QEsYFtlwqkRCSY3Cq7mqZj2wcPdXqGEAqgMNICdTGbHQUzRIC+vJ+DaiLC9Aj0cmLUSrVVRqtWt8+uDTAYu1qixBKNPdmUjIvpQJpGIwA=') format('woff2'),
+  url('iconfont.woff?t=1579802257348') format('woff'),
+  url('iconfont.ttf?t=1579802257348') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1579802257348#zg') format('svg'); /* iOS 4.1- */
+}
+
+.zg {
+  font-family: "zg" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.zg-share:before {
+  content: "\e680";
+}
+
+.zg-zglogo:before {
+  content: "\e61b";
+}
+
