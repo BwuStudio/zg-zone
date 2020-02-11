@@ -14,6 +14,6 @@ app.use(cors());
 app.use(static(path.resolve(__dirname, './')));
 // 监听端口
 app.listen(3001, function () {
-    console.log('启动成功');
+    console.log('启动成功:3001');
 })
 

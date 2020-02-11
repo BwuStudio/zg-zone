@@ -31,8 +31,20 @@ export default class Tree<T> implements Functor<T>{
         return c
     }
 
+    forEach(fn: (t: Tree<T>) => void): void {
+        const c = fn(this)
+        this.children.map(v => v.forEach(fn))
+        return c
+    }
+
+    getValue(){
+        return this.v
+    }
     getChildren() {
-        return this.children.map(v => v)
+        return this.children
+    }
+    pushChildren(tree:Tree<T>){
+        this.children.push(tree)
     }
     exist(node: Tree<T>|null): boolean {
         if (this === node)

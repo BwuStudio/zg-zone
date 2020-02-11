@@ -3,15 +3,25 @@ import { InjCss } from '../utils/injcss'
 import Tree from '../utils/Tree'
 
 type Props = {
-    cur: Tree<{ url: string, title: string }> | null,
+    cur: Tree<{
+        title: string;
+        doc: HTMLElement;
+        target: HTMLElement | null;
+    }> | null,
     list: {
         key: string;
         text: string;
         tree: Tree<{
-            url: string, title: string
+            title: string;
+            doc: HTMLElement;
+            target: HTMLElement | null;
         }>
     }[],
-    changeTo: (tree: Tree<{ url: string, title: string }> | null) => void
+    changeTo: (tree: Tree<{
+        title: string;
+        doc: HTMLElement;
+        target: HTMLElement | null;
+    }> | null) => void
 }
 
 const TabTitle: React.FC<Props> = (props: Props) => {
@@ -29,7 +39,7 @@ InjCss.gen('tab_title', {
     '': {
         float: 'left',
         height: '60px',
-        lineHeight: '60px', 
+        lineHeight: '60px',
         listStyle: 'none',
         color: 'white',
         margin: '0',

@@ -6,11 +6,19 @@ import Tree from '../utils/Tree'
 import TabTitle from './TabTitle'
 
 const TopBar: React.FC = () => {
-  const [cur, setCur] = useState<Tree<{ url: string, title: string }> | null>(state.current)
+  const [cur, setCur] = useState<Tree<{
+    title: string;
+    doc: HTMLElement;
+    target: HTMLElement | null;
+  }> | null>(state.current)
 
   const list = state.tabs
 
-  const changeTo = (v: Tree<{ url: string, title: string }> | null) => {
+  const changeTo = (v: Tree<{
+    title: string;
+    doc: HTMLElement;
+    target: HTMLElement | null;
+  }> | null) => {
     state.current = v
     onStateChange.emit(state)
   }

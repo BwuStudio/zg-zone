@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InjCss } from '../utils/injcss';
 import Tree from '../utils/Tree'
 import { state, onStateChange } from '../state/index'
@@ -13,7 +13,12 @@ const Calalog: React.FC = () => {
     return <div className="calalog">
         <div className="calalog-hidden_scrollbar">
             {
-                root ? <div>{root.tree.get().title}</div> : ''
+                root
+                    ? <div
+                        onClick={() => { state.current = root.tree; onStateChange.emit(state) }}
+                        className={'calalog-title' + (cur === root.tree ? ' focus' : '')}
+                    >{root.tree.get().title}</div>
+                    : ''
             }
             <TreeList focus={cur} list={root ? root.tree.getChildren() : []}></TreeList>
         </div>
@@ -21,13 +26,44 @@ const Calalog: React.FC = () => {
     </div>
 }
 
+const scrollTo = (top: number, i = 0) => {
+    const wTop = document.documentElement.scrollTop
+    const wBottom = document.documentElement.scrollHeight - window.innerHeight + document.documentElement.scrollTop
+
+    if (
+        (wTop === 0 || i > 20 || wBottom === 0 || top === wTop)
+        && i !== 0
+    ) return
+
+    document.documentElement.scrollTop = (top + wTop) / 2
+
+    requestAnimationFrame(v=>scrollTo(top, i + 1))
+}
+
 const TreeList: React.FC<{
-    list: Tree<{ title: string, url: string }>[],
-    focus: Tree<{ title: string, url: string }> | null,
+    list: Tree<{
+        title: string;
+        doc: HTMLElement;
+        target: HTMLElement | null;
+    }>[],
+    focus: Tree<{
+        title: string;
+        doc: HTMLElement;
+        target: HTMLElement | null;
+    }> | null,
     level?: number
 }> = (props) => {
 
     const { list, level = 0, focus } = props
+
+    useEffect(() => {
+        const c = state.current ? state.current.get().target : null
+        if (c) {
+            scrollTo( c.offsetTop)
+        }
+
+        document.title = `You clicked ${''} times`;
+    });
 
     return <ol className="cl_tree">
         {list.map(v => {
@@ -43,7 +79,6 @@ const TreeList: React.FC<{
                     onClick={() => { state.current = v; onStateChange.emit(state) }}>
                     {value.title}
                 </div>
-
                 {
                     children.length === 0
                         ? ''
@@ -64,6 +99,36 @@ InjCss.gen('calalog', {
         overflow: 'hidden',
         width: '300px',
     },
+    '.calalog-title': {
+        fontWeight: 'bold',
+        fontSize: '18px',
+        cursor: 'pointer',
+        display: 'inline-block',
+        position: 'relative',
+        padding: '8px 0',
+        color: '#333',
+        transition: 'all 0.2s ease-out',
+        textShadow: '0 0 0 rgba(0,0,0,0.2)'
+    },
+    '.calalog-title::after': {
+        content: '""',
+        width: '0',
+        position: 'absolute',
+        bottom: '0',
+        height: '3px',
+        transition: 'all 0.2s ease-out',
+        backgroundColor: '#666',
+        left: '0',
+        boxShadow: '0 0 0 rgba(0,0,0,0.2)'
+    },
+
+    '.calalog-title.focus': {
+        textShadow: '0 3px 2px rgba(0,0,0,0.2)'
+    },
+    '.calalog-title.focus::after': {
+        width: '100%',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+    },
     '.calalog-hidden_scrollbar': {
         height: '100%',
         overflowY: 'auto',
@@ -78,28 +143,28 @@ InjCss.gen('calalog', {
     '.cl_tree-title': {
         padding: '4px 0',
         cursor: 'pointer',
-        position:'relative',
-        textShadow:'0 0 0 rgba(0,0,0,0.2)'
+        position: 'relative',
+        textShadow: '0 0 0 rgba(0,0,0,0.2)'
     },
     'li[data-focus="true"] > .cl_tree-title': {
         fontWeight: 'bolder',
-        textShadow:'0 3px 3px rgba(0,0,0,0.2)'
+        textShadow: '0 3px 3px rgba(0,0,0,0.2)'
     },
     '.cl_tree-title::after': {
-        content:'""',
-        position:'absolute',
-        left:'0',
-        top:'0',
-        bottom:'0',
-        width:'20px',
-        backgroundColor:'#666',
-        opacity:'0',
-        transition:'all 0.2s ease-out'
+        content: '""',
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        bottom: '0',
+        width: '20px',
+        backgroundColor: '#666',
+        opacity: '0',
+        transition: 'all 0.2s ease-out'
     },
     'li[data-focus="true"] > .cl_tree-title::after': {
-        width:'4px',
-        opacity:'1',
-        boxShadow:'0 3px 3px rgba(0,0,0,0.2)'
+        width: '4px',
+        opacity: '1',
+        boxShadow: '0 3px 3px rgba(0,0,0,0.2)'
     }
 })
 
