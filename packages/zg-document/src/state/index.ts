@@ -5,11 +5,11 @@ import issueData from '../data/issue.data'
 import toolData from '../data/tool.data'
 import Tree from '../utils/Tree'
 import Event from '../utils/Event'
-import { toMdTree } from '../utils/mdloader'
+import { toMdTree,loadToDom }   from '../utils/mdloader'
 import { stat } from 'fs'
 
 type State = {
-    index: string;
+    index: HTMLElement;
     current: Tree<{
         title: string;
         doc: HTMLElement;
@@ -31,7 +31,7 @@ type State = {
 }
 
 const state: State = {
-    index: './md/index.md',
+    index: document.createElement('div'),
     current: null,
     tabs: [
         { key: 'tool', text: '工具库', url: toolData, tree: Tree.gen({ title: '', doc: document.createElement('div'), target: null }) },
@@ -51,8 +51,12 @@ Promise.all(
         state.tabs[i].tree = v
     })
     onStateChange.emit(state)
-
     console.log(state)
+})
+
+loadToDom('./md/index.md').then(v=>{
+    state.index = v
+    onStateChange.emit(state)
 })
 
 export {

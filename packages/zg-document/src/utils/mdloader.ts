@@ -2,22 +2,22 @@ import showdown from 'showdown'
 import 'github-markdown-css'
 import Tree from './Tree'
 
-const host = process.env.NODE_ENV === 'development'?"http://localhost:3001/browser":''
+const host = process.env.NODE_ENV === 'development'?"http://localhost:3001/browser":'https://bwustudio.github.io/zg-zone/packages/zg-libis/browser'
 
 
 const converter = new showdown.Converter()
-const cache = new Map<string, string>()
+
 const loader = (url: string) => {
-    return (fetch(url)
-        .then(res => res.text())
-        .then(text => converter.makeHtml(text)))
-}
-const loader0 = (url: string) => {
     return (fetch(url)
         .then(res => res.text())
         .then(text => ({ html: converter.makeHtml(text), md: text })))
 }
-export default loader
+export const loadToDom = (url:string) => loader(url).then<HTMLElement>(v=>{
+    const doc = document.createElement('div')
+    doc.className = 'markdown-body'
+    doc.innerHTML = v.html
+    return doc
+})
 
 export const toMdTree = (tree: Tree<{ title: string, url: string }>) => new Promise<
     Tree<{
@@ -30,7 +30,7 @@ export const toMdTree = (tree: Tree<{ title: string, url: string }>) => new Prom
 
     tree.forEach((node) => {
         const url = node.getValue().url
-        promiseArr.push(loader0(url).then(({ html, md }) => ({ url, html, md })))
+        promiseArr.push(loader(url).then(({ html, md }) => ({ url, html, md })))
     })
 
     Promise.all(promiseArr)

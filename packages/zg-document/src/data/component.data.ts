@@ -6,8 +6,8 @@ export default Tree.prase<{ url: string, title: string }>({
     children: [
         { title: 'HTML 原生组件', url: './md/component/html.md' },
 
-        { title: 'miniUI 组件', url: './md/index.md' },
+        { title: 'miniUI 组件', url: './md/component/miniUI.md'  },
 
-        { title: 'shelf 自研组件', url: './md/index.md' }
+        { title: 'shelf 自研组件', url:  './md/component/shelf.md'  }
     ]
 })

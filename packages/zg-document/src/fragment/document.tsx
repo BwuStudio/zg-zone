@@ -16,16 +16,18 @@ const Document: React.FC = () => {
                 doc.current.appendChild(v)
 
                 Array.from(v.querySelectorAll('.ifr'))
-                .forEach(v=>{
-                    v.innerHTML = ''
-                    setTimeout(()=>{
-                        v.innerHTML = `<iframe style="height:100%;width:100%" src= ${(v as HTMLElement).dataset.src}></iframe>`
-                    },300)
-                })
+                    .forEach(v => {
+                        v.innerHTML = ''
+                        setTimeout(() => {
+                            v.innerHTML = `<iframe style="height:100%;width:100%" src= ${(v as HTMLElement).dataset.src}></iframe>`
+                        }, 300)
+                    })
 
                 setFocus(false)
             }
             else {
+                doc.current.innerHTML = ''
+                doc.current.appendChild(state.index)
                 setFocus(true)
             }
         })
@@ -76,8 +78,15 @@ InjCss.gen('document', {
         boxShadow: '0 2px 4px rgba(0,0,0,0)'
     },
     '.ifr': {
-        height:'320px',
-        width:"400px"
+        height: '320px',
+        width: "400px",
+        margin: '16px 0',
+        boxShadow: ' 0 1px 3px 0 rgba(0,0,0,0.3) inset'
+    },
+    '.ifr iframe': {
+        height: '100%',
+        width: "100%",
+        border:'none'
     }
 })
 
