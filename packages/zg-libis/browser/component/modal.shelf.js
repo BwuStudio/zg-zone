@@ -8,7 +8,7 @@
         dom.style.right = "0"
         dom.style.bottom = "0"
         dom.style.background = ""
-        dom.style.zIndex = '9001'
+        dom.style.zIndex = '100'
 
     }
 

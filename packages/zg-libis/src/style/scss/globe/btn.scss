@@ -10,6 +10,15 @@
   float: right;
 }
 
+.btn_group.center {
+  width: 100%;
+  text-align: center;
+  >.block_btn{
+    float: none;
+  }
+}
+
+
 .btn_group.left {
   float: left;
 }

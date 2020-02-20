@@ -2,7 +2,7 @@ form.common,
 form.mini {
   width: 900px;
   margin: 0 auto;
-  padding: 24px 0 24px 0;
+  padding: 12px 0 12px 0;
 
   &.mini {
     padding: 0;
@@ -10,13 +10,25 @@ form.mini {
     legend:first-child {
       margin: 0 0 24px 0;
     }
-    > fieldset {
+
+    legend {
       margin: 0 0 36px 0;
+      color: rgb(10, 88, 151);
+      background: #fff;
+      border-bottom: 2px solid rgb(10, 88, 151);
+
+      &::before {
+        display: none;
+      }
+    }
+
+    > fieldset {
+      margin: 0 0 16px 0;
     }
   }
 
   > fieldset {
-    margin: 36px 0;
+    margin: 16px 0;
     position: relative;
     width: 100%;
     display: block;
@@ -31,7 +43,7 @@ form.mini {
   legend {
     line-height: 24px;
     padding: 6px;
-    margin: 24px 0;
+    margin: 16px 0;
     font-size: 16px;
     font-weight: bold;
     color: #666;
@@ -50,4 +62,89 @@ form.mini {
       content: "";
     }
   }
+}
+
+/* Input */
+
+input.gb_form,
+select.gb_form {
+  vertical-align: top;
+  height: $unit-height;
+  min-width: 100px;
+  display: inline-block;
+  line-height: $unit-height - 2px;
+  padding: 0 0 0 6px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #fff;
+}
+
+label.gb_form {
+  vertical-align: top;
+  display: inline-block;
+  padding: 0 3px 0 6px;
+  line-height: $unit-height;
+  height: $unit-height;
+}
+
+input.gb_form:focus,
+select.gb_form:focus,
+textarea.gb_form:focus {
+  border-color: #808891;
+}
+input.gb_form:disabled,
+select.gb_form:disabled,
+textarea.gb_form:disabled {
+  background-color: rgb(235, 235, 228);
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i} > {
+    input.gb_form,
+    select.gb_form,
+    textarea.gb_form {
+      width: 100%;
+    }
+  }
+}
+
+/* form */
+
+// fieldset .row {
+//   width: 100%;
+//   height: 32px;
+//   padding: 3px 6px;
+//   line-height: $unit-height;
+// }
+
+/* grid system */
+
+label {
+  white-space: nowrap;
+  word-wrap: normal;
+  word-break: keep-all;
+  padding: 0 6px;
+}
+
+/* textarea */
+
+textarea.gb_form {
+  width: 100%;
+  line-height: 18px;
+  padding: 4px 8px;
+  resize: none;
+  height: 100%;
+  min-height: 72px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+textarea.gb_form:focus {
+  border-color: #808891;
+}
+
+.required:after {
+  content: "*";
+  color: red;
 }

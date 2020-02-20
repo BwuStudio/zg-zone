@@ -2,30 +2,31 @@ import Input from "./Input";
 
 export default class Text extends Input<string>{
 
-    static gen(s:string,config:{
-        container:HTMLElement
-    }){
-        return new this(s,config.container)
+    static gen(s: string, config: {
+        container: HTMLElement
+    }) {
+        return new this(s, config.container)
     }
 
-    constructor(id:string,container:HTMLElement){
-        super(id,container)
+    constructor(id: string, container: HTMLElement) {
+        super(id, container)
         this.reflashView()
     }
 
-    private target : HTMLInputElement = document.createElement('input')
+    private target: HTMLInputElement = document.createElement('input')
 
-    protected reflashView(){
-        if(this.target) this.target.remove()
+    protected reflashView() {
+        if (this.target) this.target.remove()
         this.target = document.createElement('input')
+        this.target.onchange = e => { this.setValue(this.target.value) }
         this.container.appendChild(this.target)
     }
 
-    getValue(){
-        return this.value||''
+    getValue() {
+        return this.value || ''
     }
 
-    setValue(v:string|null){
+    setValue(v: string | null) {
         const c = v || ''
         this.value = c
         this.target.value = c

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="../script/miniUI37/miniui.js"></script>
+    <link rel="stylesheet" type="text/css" href="../script/miniUI37/themes/default/miniui.css">
+    <script src="../../dist/index.umd.js"></script>
+    <script src='../component/modal.shelf.js' class="shelf-modal"></script>
+    <script src='../component/detailSelect.shelf.js' class="shelf-detailSelect"></script>
+    <script src='../component/popList.shelf.js' class="shelf-popList"></script>
+    <script src='../component/menuBtn.shelf.js' class="shelf-menuBtn"></script>
+
+    <title>Document</title>
+    <script>
+
+        var api = Api(function (ajax) {
+            return {
+                getData: function () {
+                    return new Promise(function (res) {
+                        res({
+                            name: '黎万民',
+                            birth: '1967-1-2',
+                            sex: [['001', '男']],
+                            tele: '027-87541110',
+                            minzu: ['001', '汉族'],
+                            phone: '13871085936',
+                            px_start: '2003-1-2',
+                            px_end: '2003-3-2',
+                            unit: ['2003-3-2', '']
+                        })
+                    })
+                }
+            }
+        })
+
+        Shelf.done().then(function () {
+
+            mini.parse()
+
+            Shelf.get('menuBtn')(
+                document.body.querySelector('#grid_export'), {
+                text: '导出',
+                list: [
+                    { id: "log", text: '控制台' },
+                    { id: "alert", text: '提示' }
+                ],
+                width: 100,
+                itemClick: function (v) {
+                    if (v.id == 'log')
+                        console.log(JSON.stringify(mini.get('datagrid1').getData()))
+
+                    if (v.id == 'alert')
+                        alert(JSON.stringify(mini.get('datagrid1').getData()))
+                }
+            })
+
+            document.body.querySelector('#grid_add').onclick = function () {
+                showSQRForm(null, function (data) {
+                    mini.get('datagrid1').setData(
+                        [data].concat(mini.get('datagrid1').getData())
+                    )
+                })
+            }
+            document.body.querySelector('#grid_delete').onclick = function () {
+                var s = mini.get('datagrid1').getSelecteds()
+                if (!s.length) return alert('请选择人员')
+
+                mini.get('datagrid1').setData(
+                    mini.get('datagrid1').getData().filter(function (v) {
+                        return s.find(function (m) { return s === v })
+                    })
+                )
+            }
+
+            mini.get('datagrid1').setMultiSelect(true)
+            mini.get('datagrid1').setColumns([{
+                type: 'checkcolumn'
+            }, {
+                type: 'indexcolumn',
+                header: '序号',
+                width: '40'
+            }, {
+                field: 'time',
+                header: '日期',
+                width: '70'
+            }, {
+                field: 'name',
+                header: '姓名',
+                width: '70'
+            }, {
+                field: 'idnum',
+                header: '证件号',
+                width: '130'
+            }, {
+                field: 'content',
+                header: '内容分类',
+                width: '130'
+            }, {
+                field: 'place',
+                header: '问题属地',
+                width: '130'
+            }, {
+                field: 'status',
+                header: '状态',
+                width: '130',
+                renderer: function (v) {
+                    return v.value[1]
+                }
+            }, {
+                field: 'opreate',
+                header: "操作",
+                align: 'center',
+                renderer: function (arg) {
+                    var row_data = arg.row
+                    var row_index = arg.rowIndex
+                    return Dom.async('<div><a class="inline_btn edit_btn">修改</a><a class="inline_btn delete_btn">删除</a></div>', function (dom) {
+                        dom.querySelector('.edit_btn').onclick = function () {
+                            showSQRForm(row_data, function (data) {
+                                alert(JSON.stringify(data))
+                            })
+                        }
+                        dom.querySelector('.delete_btn').onclick = function () {
+                            mini.get('datagrid1').setData(
+                                mini.get('datagrid1').getData().filter(function (v, i) {
+                                    return i !== row_index
+                                })
+                            )
+                        }
+
+                    })
+                }
+            }].map(function (v) {
+                v.headerAlign = v.headerAlign || 'center'
+                return v
+            }))
+
+            mini.get('datagrid1').setData([{
+                time: '2017-7-2',
+                name: "叶剑英",
+                idnum: "001-3213-3213",
+                content: "其他",
+                place: '埃尔新几内亚',
+                status: [001, '已解决']
+            }])
+
+        })
+
+
+        function showSQRForm(data, cb) {
+            var modal = Shelf.get('modal').open(
+                Dom(
+                    document.getElementById('l_form').innerHTML,
+                    function (dom) {
+
+                        var form = Form({
+                            'time': Form.Date({ request: true }),
+                            'name': Form.Text(),
+                            'idnum': Form.Text(),
+                            'content': Form.Text(),
+                            'place': Form.Text(),
+                            'status': Form.Select(),
+                        }, dom)
+
+                        dom.querySelector('.save_btn').onclick = function () {
+                            if (cb) cb(form.getData())
+                            modal.emit('close')
+                        }
+
+                        dom.querySelector('.cancel_btn').onclick = function () {
+                            modal.emit('close')
+                        }
+
+                        if (data)
+                            form.setData(data)
+
+                        form.status.setOpions({
+                            '001': '已解决',
+                            '002': '选项2',
+                            '003': '选项3',
+                            '004': '选项4',
+                        })
+
+                    }), {
+                width: 360,
+                height: 480,
+                title: '编辑详情'
+            })
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="globe">
+        <div class="head">
+            <div class="row">
+                <a href="" class="block_btn">查询</a>
+            </div>
+        </div>
+        <div class="body flex-col">
+            <div class="mini-datagrid-bar">
+                <div class="row">
+                    <div class="btn_group right">
+                        <a id="grid_add" class="block_btn">新增</a>
+                        <a id="grid_delete" class="block_btn">批量删除</a>
+                        <a id="grid_export" class="block_btn">导出</a>
+                    </div>
+                </div>
+            </div>
+            <div id="datagrid1" class="mini-datagrid" style="flex: 1;height:100%">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="template" style="display: none;">
+        <div id="l_form">
+            <div class="panel">
+                <div class="body">
+                    <form class="mini" style="width: 100%;">
+                        <fieldset>
+                            <legend>申请人信息</legend>
+                            <div class="row">
+                                <label class="col-3">日期:</label>
+                                <div class="col-9" data-name-time></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-3">姓名:</label>
+                                <div class="col-9" data-name-name></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-3">证件号:</label>
+                                <div class="col-9" data-name-idnum></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-3">内容分类:</label>
+                                <div class="col-9" data-name-content></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-3">问题属地:</label>
+                                <div class="col-9" data-name-place></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-3">状态:</label>
+                                <div class="col-9" data-name-status></div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="foot">
+                    <div class="row">
+                        <div class="btn_group center">
+                            <a class="block_btn save_btn">保存</a>
+                            <a class="block_btn cancel_btn">取消</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+
+
+</html>

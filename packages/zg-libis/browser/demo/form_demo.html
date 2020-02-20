@@ -23,9 +23,24 @@
                         res({
                             name: '黎万民',
                             birth: '1967-1-2',
-                            sex: ['001', '男'],
+                            sex: [['001', '男']],
                             tele: '027-87541110',
                             minzu: ['001', '汉族'],
+                            phone: '13871085936',
+                            px_start: '2003-1-2',
+                            px_end: '2003-3-2',
+                            unit: ['2003-3-2', '']
+                        })
+                    })
+                },
+                getData1: function () {
+                    return new Promise(function (res) {
+                        res({
+                            name: '百千姓',
+                            birth: '1978-8-2',
+                            sex: [['002', '女']],
+                            tele: '027-87541110',
+                            minzu: ['002', ''],
                             phone: '13871085936',
                             px_start: '2003-1-2',
                             px_end: '2003-3-2',
@@ -40,6 +55,24 @@
 
             mini.parse()
 
+            document.body.querySelector('#grid_add').onclick = function () {
+                showSQRForm(null, function (data) {
+
+                    mini.get('datagrid1').setData(
+                        [data].concat(mini.get('datagrid1').getData())
+                    )
+                })
+            }
+            document.body.querySelector('#grid_delete').onclick = function () {
+                var s = mini.get('datagrid1').getSelecteds()
+                if (!s.length) return alert('请选择人员')
+
+                mini.get('datagrid1').setData(
+                    mini.get('datagrid1').getData().filter(function (v) {
+                        return s.find(function (m) { return s === v })
+                    })
+                )
+            }
             var form = Form({
                 'birth': Form.Date({ request: true }),
                 'status': Form.Select(),
@@ -51,14 +84,32 @@
                 'px_start': Form.Date({ request: true }),
                 'px_end': Form.Date({ request: true }),
                 'unit': Form.DetailSelect({ table: 'zb02' }),
-            })
+            }, document.body.querySelector('#sqr'))
 
+            var form1 = Form({
+                'birth': Form.Date({ request: true }),
+                'status': Form.Select(),
+                'sex': Form.Checkbox(),
+                'tele': Form.Text(),
+                'name': Form.Text(),
+                'phone': Form.Text(),
+                'minzu': Form.Radio(),
+                'px_start': Form.Date({ request: true }),
+                'px_end': Form.Date({ request: true }),
+                'unit': Form.DetailSelect({ table: 'zb02' }),
+            }, document.body.querySelector('#peiou'))
+
+            document.body.querySelector('#print').onclick = function () {
+                alert(JSON.stringify(form.getData()))
+            }
+
+            mini.get('datagrid1').setMultiSelect(true)
             mini.get('datagrid1').setColumns([{
                 type: 'checkcolumn'
             }, {
                 type: 'indexcolumn',
                 header: '序号',
-                width: '30'
+                width: '40'
             }, {
                 field: 'time',
                 header: '日期',
@@ -90,50 +141,33 @@
                 field: 'opreate',
                 header: "操作",
                 renderer: function (arg) {
-                    const row_data = arg.row
+                    var row_data = arg.row
+                    var row_index = arg.rowIndex
                     return Dom.async('<div><a class="inline_btn edit_btn">修改</a><a class="inline_btn delete_btn">删除</a></div>', function (dom) {
                         dom.querySelector('.edit_btn').onclick = function () {
-                            Shelf.get('modal').open(
-                                Dom(
-                                    document.getElementById('l_form').innerHTML,
-                                    function (dom) {
-
-                                        var form = Form({
-                                            'time': Form.Date({ request: true }),
-                                            'name': Form.Text(),
-                                            'idnum': Form.Text(),
-                                            'content': Form.Text(),
-                                            'place': Form.Text(),
-                                            'status': Form.Select(),
-                                        }, dom)
-
-                                        form.setData(row_data)
-
-                                        form.status.setOpions({
-                                            '001': '已解决',
-                                            '002': '选项2',
-                                            '003': '选项3',
-                                            '004': '选项4',
-                                        })
-                                        
-                                    }), {
-                                width: 360,
-                                height: 480,
-                                title: '编辑详情'
+                            showSQRForm(row_data, function (data) {
+                                alert(JSON.stringify(data))
                             })
                         }
                         dom.querySelector('.delete_btn').onclick = function () {
-                            alert(2)
+                            mini.get('datagrid1').setData(
+                                mini.get('datagrid1').getData().filter(function (v, i) {
+                                    return i !== row_index
+                                })
+                            )
                         }
 
                     })
                 }
-            }])
+            }].map(function (v) {
+                v.headerAlign = v.headerAlign || 'center'
+                return v
+            }))
 
             mini.get('datagrid1').setData([{
                 time: '2017-7-2',
                 name: "叶剑英",
-                idnum: "001",
+                idnum: "001-3213-3213",
                 content: "其他",
                 place: '埃尔新几内亚',
                 status: [001, '已解决']
@@ -165,10 +199,78 @@
 
             })
 
+            api.getData1().then(function (data) {
+
+                form1.setData(data)
+
+                if (!form1.birth.getValue()) {
+                    form1.birth.setValue('2017-7-1')
+                }
+                console.log(form1)
+
+                form1.status.setOpions({
+                    '001': '选项1',
+                    '002': '选项2',
+                    '003': '选项3',
+                    '004': '选项4',
+                })
+                form1.sex.setOpions({
+                    '001': '男',
+                    '002': '女'
+                })
+                form1.minzu.setOpions({
+                    '001': '汉族',
+                    '002': '其他少数民族'
+                })
+
+            })
+
             window.getData = function () {
                 return form.getData()
             }
         })
+
+
+        function showSQRForm(data, cb) {
+            var modal = Shelf.get('modal').open(
+                Dom(
+                    document.getElementById('l_form').innerHTML,
+                    function (dom) {
+
+                        var form = Form({
+                            'time': Form.Date({ request: true }),
+                            'name': Form.Text(),
+                            'idnum': Form.Text(),
+                            'content': Form.Text(),
+                            'place': Form.Text(),
+                            'status': Form.Select(),
+                        }, dom)
+
+                        dom.querySelector('.save_btn').onclick = function () {
+                            if (cb) cb(form.getData())
+                            modal.emit('close')
+                        }
+
+                        dom.querySelector('.cancel_btn').onclick = function () {
+                            modal.emit('close')
+                        }
+
+                        if (data)
+                            form.setData(data)
+
+                        form.status.setOpions({
+                            '001': '已解决',
+                            '002': '选项2',
+                            '003': '选项3',
+                            '004': '选项4',
+                        })
+
+                    }), {
+                width: 360,
+                height: 480,
+                title: '编辑详情'
+            })
+        }
 
     </script>
 </head>
@@ -178,7 +280,7 @@
         <div class="head">
             <div class="row">
                 <div class="btn_group right">
-                    <a href="" class="block_btn">导出</a>
+                    <a id="print" class="block_btn">打印</a>
                     <a href="" class="block_btn disabled">保存</a>
                     <a href="" class="block_btn white">修改</a>
                     <a href="" class="block_btn">关闭</a>
@@ -188,10 +290,10 @@
         </div>
         <div class="body">
             <form class="common">
-                <fieldset>
+                <fieldset id="sqr">
                     <legend>申请人信息</legend>
                     <div class="row">
-                        <label class="col-2">姓名:</label>
+                        <label class="col-2">申请人姓名:</label>
                         <div class="col-4" data-name-name></div>
                         <label class="col-2">出生日期:</label>
                         <div class="col-4" data-name-birth></div>
@@ -203,7 +305,42 @@
                         <div class="col-4" data-name-tele></div>
                     </div>
                     <div class="row">
-                        <label class="col-2">性别:</label>
+                        <label class="col-2">申请人性别:</label>
+                        <div class="col-4" data-name-sex></div>
+                        <label class="col-2">手机号:</label>
+                        <div class="col-4" data-name-phone></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">任职状态:</label>
+                        <div class="col-4" data-name-status></div>
+                        <label class="col-2">培训日期:</label>
+                        <div class="col-4 flex-row">
+                            <div style="flex: 1;" data-name-px_start></div>
+                            <b>至</b>
+                            <div style="flex: 1;" data-name-px_end></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">主管单位:</label>
+                        <div class="col-4" data-name-unit></div>
+                    </div>
+                </fieldset>
+                <fieldset id="peiou">
+                    <legend>申请人配偶信息</legend>
+                    <div class="row">
+                        <label class="col-2">申请人配偶姓名:</label>
+                        <div class="col-4" data-name-name></div>
+                        <label class="col-2">出生日期:</label>
+                        <div class="col-4" data-name-birth></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">配偶民族:</label>
+                        <div class="col-4" data-name-minzu></div>
+                        <label class="col-2">电话:</label>
+                        <div class="col-4" data-name-tele></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">配偶性别:</label>
                         <div class="col-4" data-name-sex></div>
                         <label class="col-2">手机号:</label>
                         <div class="col-4" data-name-phone></div>
@@ -226,38 +363,16 @@
                 <fieldset>
                     <legend>申请人信息</legend>
                     <div class="row">
-                        <div id="datagrid1" class="mini-datagrid" style="height:240px;">
+                        <div class="mini-datagrid-bar">
+                            <div class="row">
+                                <div class="btn_group right">
+                                    <a id="grid_add" class="block_btn">新增</a>
+                                    <a id="grid_delete" class="block_btn">批量删除</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>申请人信息</legend>
-                    <div class="row">
-                        1
-                    </div>
-                    <div class="row">
-                        2
-                    </div>
-                    <div class="row">
-                        3
-                    </div>
-                    <div class="row">
-                        4
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>申请人信息</legend>
-                    <div class="row">
-                        1
-                    </div>
-                    <div class="row">
-                        2
-                    </div>
-                    <div class="row">
-                        3
-                    </div>
-                    <div class="row">
-                        4
+                        <div id="datagrid1" class="mini-datagrid" style="height:320px;">
+                        </div>
                     </div>
                 </fieldset>
             </form>
@@ -302,9 +417,9 @@
                 </div>
                 <div class="foot">
                     <div class="row">
-                        <div class="btn_group right">
-                            <a href="" class="block_btn">导出</a>
-                            <a href="" class="block_btn disabled">保存</a>
+                        <div class="btn_group center">
+                            <a class="block_btn save_btn">保存</a>
+                            <a class="block_btn cancel_btn">取消</a>
                         </div>
                     </div>
                 </div>

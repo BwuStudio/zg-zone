@@ -56,7 +56,7 @@ Shelf.define({
         input: function (dom, table) {
 
             var id = dom.id || (dom.id = Tool.newId())
-            dom.className += ' mini-autocomplete'
+            dom.className += ' mini-autocomplete gb_form'
             dom.style.width = dom.style.width || 'auto'
             mini.parse(dom)
             var t = mini.get(id)

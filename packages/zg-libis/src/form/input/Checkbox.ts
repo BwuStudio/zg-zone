@@ -6,19 +6,22 @@ type Text = string
 
 export default class checkbox extends Input<[Value, Text][]>{
 
-  
+
     static gen(s: string, config: {
-        container:HTMLElement
+        container: HTMLElement
     }) {
-        return new this(s,config.container)
+        return new this(s, config.container)
     }
 
     list: { value: string, text: string }[] = []
 
-    constructor(id:string,container:HTMLElement){
-        super(id,container)
+    constructor(id: string, container: HTMLElement) {
+        super(id, container)
+        this.uid = Math.floor(Math.random()*10000).toString()
         this.reflashView()
     }
+
+    private uid :string
 
     protected reflashView() {
         this.target.forEach(v => { v[0].remove() })
@@ -28,7 +31,7 @@ export default class checkbox extends Input<[Value, Text][]>{
             const s = document.createElement('span')
 
             r.type = 'checkbox'
-            r.name = this.id
+            r.name = this.id + this.uid
             r.value = v.value
             s.innerHTML = v.text
 
@@ -40,8 +43,14 @@ export default class checkbox extends Input<[Value, Text][]>{
             return [l, r]
         })
 
-        this.target.forEach(v => {
-            this.container.appendChild(v[0])
+        this.target.forEach(([l, r]) => {
+            
+            this.container.appendChild(l)
+
+            r.onchange = e => this.setValue(
+                this.list.filter((v, i) =>
+                    this.target[i]?.[1].checked).map(v =>
+                        [v.value, v.text]))
         })
     }
 

@@ -6,25 +6,29 @@ type Text = string
 export default class Select extends Input<[Value, Text]>{
 
     static gen(s: string, config: {
-        container:HTMLElement
+        container: HTMLElement
     }) {
-        return new this(s,config.container)
+        return new this(s, config.container)
     }
 
     list: { value: string, text: string }[] = []
 
-    constructor(id: string,container:HTMLElement) {
-        super(id,container)
+    constructor(id: string, container: HTMLElement) {
+        super(id, container)
         this.reflashView()
     }
 
     private target: HTMLSelectElement = document.createElement('select')
-    
-    protected reflashView(){
-        if(this.target) try{this.target.remove()}catch(e){}
+
+    protected reflashView() {
+        if (this.target) try { this.target.remove() } catch (e) { }
 
         this.target = document.createElement('select')
         this.target.className = 'gb_form'
+        this.target.onchange = e => {
+            const c = this.list.find(v => v.value === this.target.value)
+            this.setValue(c ? [c.value, c.text] : null)
+        }
         this.container.appendChild(this.target)
     }
 
@@ -32,14 +36,14 @@ export default class Select extends Input<[Value, Text]>{
         return this.value || ['', '']
     }
 
-    setOpions(c:{[value:string]:string}){
-        this.list = Object.keys(c).map(value=>{
+    setOpions(c: { [value: string]: string }) {
+        this.list = Object.keys(c).map(value => {
             const text = c[value] || ''
-            return {value,text}
+            return { value, text }
         })
 
         this.target.innerHTML = ''
-        this.target.innerHTML = this.list.map(v=>`<option value="${v.value}">${v.text}</option>`).join('')
+        this.target.innerHTML = this.list.map(v => `<option value="${v.value}">${v.text}</option>`).join('')
     }
 
     setValue(v: [Value, Text] | null) {

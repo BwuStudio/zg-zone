@@ -7,27 +7,30 @@ type Text = string
 export default class Radio extends Input<[Value, Text]>{
 
     static gen(s: string, config: {
-        container:HTMLElement
+        container: HTMLElement
     }) {
-        return new this(s,config.container)
+        return new this(s, config.container)
     }
 
     list: { value: string, text: string }[] = []
 
-    constructor(id: string,cntr:HTMLElement) {
+    constructor(id: string, cntr: HTMLElement) {
         super(id, cntr)
+        this.uid = Math.floor(Math.random() * 10000).toString()
         this.reflashView()
     }
 
+    private uid: string
+
     protected reflashView() {
-        this.target.forEach(v => {v[0].remove()})
+        this.target.forEach(v => { v[0].remove() })
         this.target = this.list.map(v => {
             const r = document.createElement('input')
             const l = document.createElement('label')
             const s = document.createElement('span')
 
             r.type = 'radio'
-            r.name = this.id
+            r.name = this.id + this.uid
             r.value = v.value
             s.innerHTML = v.text
 
@@ -36,15 +39,22 @@ export default class Radio extends Input<[Value, Text]>{
             l.appendChild(r)
             l.appendChild(s)
 
-            return [l,r]
+            return [l, r]
         })
 
-        this.target.forEach(v => {
-            this.container.appendChild(v[0])
+        this.target.forEach(([l, r]) => {
+            this.container.appendChild(l)
+
+            r.onchange = e => {
+
+                const c = this.list.find((v, i) => this.target[i]?.[1].checked)
+
+                this.setValue(c ? [c.value, c.text] : null)
+            }
         })
     }
 
-    private target: [HTMLLabelElement,HTMLInputElement][] = []
+    private target: [HTMLLabelElement, HTMLInputElement][] = []
 
     getValue() {
         return this.value || ['', '']
