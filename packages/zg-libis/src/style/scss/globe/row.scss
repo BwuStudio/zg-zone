@@ -1,6 +1,7 @@
+@import '../var.scss';
 .row {
-  line-height: 26px;
-  padding: 3px 6px;
+  line-height: $unit-height;
+  padding: 6px 12px;
   overflow: hidden;
   width: 100%;
   position: relative;
@@ -11,10 +12,10 @@
   }
 
   > div > input {
-    height: 26px;
+    height: $unit-height;
     width: 100%;
     display: block;
-    line-height: 26px;
+    line-height: $unit-height;
     padding: 0 0 0 6px;
     border-radius: 3px;
     border: 1px solid #ccc;
@@ -33,8 +34,8 @@
   $n: 12;
   @for $i from 1 through $n {
     > .col-#{$i} {
-      line-height: 26px;
-      padding: 0 6px;
+      line-height: $unit-height;
+      padding: 1px 6px;
       float: left;
       position: relative;
     }
@@ -68,3 +69,4 @@
     }
   }
 }
+

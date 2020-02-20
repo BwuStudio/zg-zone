@@ -39,4 +39,5 @@ html 代码:
 <div class="ifr" data-src="/widget/html/textarea.html" style="height:110px" ></div>
 
 html 代码:
+
     <textarea class="gb_form"></textarea>

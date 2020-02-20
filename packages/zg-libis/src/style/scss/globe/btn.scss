@@ -1,0 +1,69 @@
+@import "../var.scss";
+
+/* btn style*/
+
+.btn_group {
+  overflow: hidden;
+}
+
+.btn_group.right {
+  float: right;
+}
+
+.btn_group.left {
+  float: left;
+}
+
+.btn_group > a.block_btn{
+  margin: 2px 0 2px 8px;
+  float: left;
+}
+
+.row .btn_group > a.block_btn{
+  margin: 0 0 0 8px;
+}
+
+a.block_btn{
+  vertical-align: top;
+  display: inline-block;
+  height: $unit-height;
+  background-color: #0b70c1;
+  border: 1px solid #0b70c1;
+  line-height: $unit-height - 2px;
+  font-size: 14px;
+  color: #fff;
+  padding: 0 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3 ease-out;
+}
+
+a.inline_btn {
+  display: inline-block;
+  color: #3876b9;
+  margin: 0 4px;
+  padding: 0 3px;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+}
+
+a.inline_btn:hover {
+  text-decoration: underline;
+}
+
+a.block_btn.white{
+  background-color: #fff;
+  color: #0b70c1;
+}
+
+a.block_btn.disabled {
+  background-color: #999;
+  border-color: #999;
+  cursor: not-allowed;
+}
+
+a.block_btn:hover {
+  opacity: 0.9;
+}

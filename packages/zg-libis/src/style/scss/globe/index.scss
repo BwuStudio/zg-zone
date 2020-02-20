@@ -3,12 +3,25 @@
 .panel {
   height: 100%;
   width: auto;
-  display: block;
+  display: flex;
   position: relative;
+  flex-direction: column;
 
-  @import "./body.scss";
-  @import "./head.scss";
-  @import "./foot.scss";
+  > .body {
+    padding: 8px 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+  }
+
+  > .foot {
+    padding: 0 8px;
+  }
+
+  > .head {    
+    border-bottom: solid rgb(244,244,244) 10px!important;
+    padding: 0 8px;
+  }
 
   // 侧边栏样式
   @import "./sider.scss";
@@ -22,6 +35,18 @@
   // 表格样式
   @import "./listTable.scss";
 
+  // 按钮
+  @import "./btn.scss";
+  
+  // 表单
+  @import "./form.scss";
+  
+  // 输入框
+  @import "./input.scss";
+
   // icon fix
   @import "./fixIcon.scss";
+
+  // flex
+  @import "./flex.scss";
 }

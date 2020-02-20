@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/browser/script/miniUI37/miniui.js"></script>
+    <link rel="stylesheet" type="text/css" href="../script/miniUI37/themes/default/miniui.css">
+    <script src="../../dist/index.umd.js"></script>
+
+
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .main {
+            height: 100%;
+            width: 100%;
+            display: block;
+            position: relative;
+        }
+
+        table.panel {
+            height: 100%;
+            display: block;
+        }
+
+        /* tool bar */
+
+        .bar {
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bar>h1 {
+            height: 40px;
+            line-height: 40px;
+            text-align: left;
+            padding: 0 24px;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            background: #0095DB;
+        }
+
+        /* fiex-bar */
+
+        .main.fiex-bar>.bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .main.fiex-bar {
+            padding-top: 40px
+        }
+
+        .main.fiex-bar.row-1 {
+            padding-top: 40px
+        }
+
+        .main.fiex-bar.row-1_5 {
+            padding-top: 60px
+        }
+
+        .main.fiex-bar.row-2 {
+            padding-top: 80px
+        }
+
+        .main.fiex-bar.row-2_5 {
+            padding-top: 100px
+        }
+
+        .main.fiex-bar>.container {
+            height: 100%;
+            overflow: auto;
+            position: relative;
+        }
+
+        /* form */
+
+        .container>form {
+            width: 900px;
+            margin: 0 auto;
+            padding: 24px 0 24px 0;
+        }
+
+        form>fieldset {
+            margin: 36px 0;
+            position: relative;
+            width: 100%;
+            display: block;
+            overflow: hidden;
+            min-width: auto;
+        }
+
+        form>fieldset>legend {
+            line-height: 24px;
+            padding: 6px;
+            margin: 24px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            padding-left: 16px;
+            position: relative;
+            background-color: rgb(239, 245, 250);
+            width: 100%;
+        }
+
+        form>fieldset>legend:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 6px;
+            background-color: #0095DB;
+            content: '';
+        }
+
+        /* btn */
+
+        .btn-group {
+            overflow: hidden;
+        }
+
+        .btn-group.right {
+            overflow: hidden;
+            float: right;
+        }
+
+        .btn-group.left {
+            overflow: hidden;
+            float: left;
+        }
+
+        /* a.btn-float{
+    display: block;
+    float: left;
+    padding: 0 6px;
+    text-align: center;
+    line-height: 26px;
+    background-color: #0095DB;
+} */
+
+        .btn-group>button,
+        a.btn-float {
+            display: block;
+            float: left;
+            height: 28px;
+            text-align: center;
+            line-height: 26px;
+            border: 1px solid #0095DB;
+            background: #0095DB;
+            padding: 0 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color, border, box-shadow 0.3s ease;
+            outline: none;
+            border-radius: 2px;
+        }
+
+        .btn-group>button {
+            margin: 6px 3px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px #ccc;
+        }
+
+        .btn-group>button:hover,
+
+        a.btn-float:hover {
+            background-color: #009EE8;
+            border: 1px solid #009EE8;
+
+        }
+
+        .btn-group>button:hover {
+            box-shadow: 0 3px 8px #ccc;
+        }
+
+        .btn-group>button:active,
+        a.btn-float:active {
+            background-color: #0182BE;
+            border: 1px solid #0182BE;
+        }
+
+        .btn-group>button:active {
+            box-shadow: 0 1px 2px #ccc;
+        }
+
+        .btn-group>button.disabled,
+        .btn-group>button[disabled="disabled"],
+        a.btn-float.disable {
+            border: 1px solid #ccc !important;
+            background: #ccc !important;
+            cursor: not-allowed;
+        }
+
+        /* grid system */
+
+        .row {
+            line-height: 28px;
+            padding: 4px 6px;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .row>.col-1,
+        .row>.col-2,
+        .row>.col-3,
+        .row>.col-4,
+        .row>.col-5,
+        .row>.col-6,
+        .row>.col-7,
+        .row>.col-8,
+        .row>.col-9,
+        .row>.col-10,
+        .row>.col-11,
+        .row>.col-12 {
+            line-height: 28px;
+            padding: 0 6px;
+            float: left;
+            position: relative;
+        }
+
+        .row>.row.col-1,
+        .row>.row.col-2,
+        .row>.row.col-3,
+        .row>.row.col-4,
+        .row>.row.col-5,
+        .row>.row.col-6,
+        .row>.row.col-7,
+        .row>.row.col-8,
+        .row>.row.col-9,
+        .row>.row.col-10,
+        .row>.row.col-11,
+        .row>.row.col-12 {
+            padding: 0;
+        }
+
+
+
+
+        .row>.col-1 {
+            width: 8.3333%
+        }
+
+        .row>.col-2 {
+            width: 16.6666%
+        }
+
+        .row>.col-3 {
+            width: 25%
+        }
+
+        .row>.col-4 {
+            width: 33.3333%
+        }
+
+        .row>.col-5 {
+            width: 41.6666%
+        }
+
+        .row>.col-6 {
+            width: 50%
+        }
+
+        .row>.col-7 {
+            width: 8.3333%
+        }
+
+        .row>.col-8 {
+            width: 66.6666%
+        }
+
+        .row>.col-9 {
+            width: 75%
+        }
+
+        .row>.col-10 {
+            width: 83.3333%
+        }
+
+        .row>.col-11 {
+            width: 91.6666%
+        }
+
+        .row>.col-12 {
+            width: 100%
+        }
+
+        .row>label {
+            display: block;
+            text-align: right;
+        }
+
+        label {
+            white-space: nowrap;
+            word-wrap: normal;
+            word-break: keep-all;
+            padding: 0 6px;
+        }
+
+        .row>div>input {
+            height: 28px;
+            width: 100%;
+            display: block;
+            line-height: 28px;
+            padding: 0 0 0 6px;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+            float: left;
+            outline: none;
+        }
+
+        .row>div>input:focus {
+            border-color: #808891;
+        }
+
+        .row>* {
+            overflow: hidden;
+        }
+
+        .row .offset-1 {
+            margin-left: 8.3333%
+        }
+
+        .row .offset-2 {
+            margin-left: 16.6666%
+        }
+
+        .row .offset-3 {
+            margin-left: 25%
+        }
+
+        .row .offset-4 {
+            margin-left: 33.3333%
+        }
+
+        .row .offset-5 {
+            margin-left: 41.6666%
+        }
+
+        .row .offset-6 {
+            margin-left: 50%
+        }
+
+        .row .offset-7 {
+            margin-left: 8.3333%
+        }
+
+        .row .offset-8 {
+            margin-left: 66.6666%
+        }
+
+        .row .offset-9 {
+            margin-left: 75%
+        }
+
+        .row .offset-10 {
+            margin-left: 83.3333%
+        }
+
+        .row .offset-11 {
+            margin-left: 91.6666%
+        }
+
+        .row .offset-12 {
+            margin-left: 100%
+        }
+
+        /* miniUI */
+        .mini-datepicker {
+            width: 100%;
+            height: 28px;
+            line-height: 28px;
+        }
+
+        .mini-buttonedit-border {
+            height: 26px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+        }
+
+        .mini-buttonedit-border>input {
+            line-height: 26px;
+            height: 26px;
+            font-size: 14px;
+        }
+
+        .mini-buttonedit-button,
+        .mini-buttonedit-close {
+            height: 22px;
+        }
+
+        .mini-buttonedit {
+            display: block;
+            height: 28px;
+            width: 100%;
+            float: left;
+        }
+    </style>
+
+    <title>Document</title>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div class="main fiex-bar row-2">
+        <div class="bar">
+            <h1>申请人信息</h1>
+            <div class="btn-group left"></div>
+            <div class="btn-group right">
+                <a class="block_btn">保存</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <form>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        <label class="col-2">出生日期:</label>
+                        <div class="col-4">
+                            <input id="birthday" name="birthday" class="mini-datepicker" />
+                        </div>
+                        <label class="col-2">姓名:</label>
+                        <div class="col-4">
+                            <input id="select2" style="width:50%" class="mini-treeselect validate[require|num|len:5]"
+                                multiSelect="false" valueFromSelect="false" textField="text" valueField="id"
+                                parentField="pid" value="control" onbeforenodeselect="beforenodeselect"
+                                allowInput="true" showRadioButton="true" showFolderCheckBox="false" />
+                            <input style="width:50%">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">毕业时间:</label>
+                        <div class="col-4">
+                            <input id="date1" class="mini-monthpicker" style="width:70%" value="2010-01" />
+                            <span style="float:left;width:30%;text-align:center">测试文字</span>
+                        </div>
+                        <label class="col-2">手机号:</label>
+                        <div class="col-4">
+                            <input type="number">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">姓名:</label>
+                        <div class="col-4">
+                            <input style="width:70%" type="text" id="name">
+                            <a class="btn-float" style="width:30%">测试按钮</a>
+                        </div>
+                        <label class="col-2">手机号:</label>
+                        <div class="col-4">
+                            <input type="number" class="validate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2 offset-6">证件类型:</label>
+                        <div class="col-4">
+                            <!-- <input class="validate[require|num|len:5]" type="number"> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">身份证号:</label>
+                        <div class="col-10">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                            <input style="width:5.555%;text-align:center;padding:0" type="text">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">性别:</label>
+                        <div class="col-10">
+                            <label><input type="radio" name='sex'>无性别</label>
+                            <label><input type="radio" name='sex'>两性人</label>
+                            <label><input type="radio" name='sex'>顺性女</label>
+                            <label><input type="radio" name='sex'>顺性男</label>
+                            <label><input type="radio" name='sex'>非常规性别</label>
+                            <label><input type="radio" name='sex'>性别存疑</label>
+                            <label><input type="radio" name='sex'>变体性别</label>
+                            <label><input type="radio" name='sex'>间性人</label>
+                            <label><input type="radio" name='sex'>男女皆非</label>
+                            <label><input type="radio" name='sex'>非二元</label>
+                            <label><input type="radio" name='sex'>其他</label>
+                            <label><input type="radio" name='sex'>泛性别</label>
+                            <label><input type="radio" name='sex'>跨性别</label>
+                            <label><input type="radio" name='sex'>变性男</label>
+                            <label><input type="radio" name='sex'>变性女</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">性别:</label>
+                        <div class="col-10">
+                            <label><input type="checkbox" name='sex1'>无性别</label>
+                            <label><input type="checkbox" name='sex1'>两性人</label>
+                            <label><input type="checkbox" name='sex1'>顺性女</label>
+                            <label><input type="checkbox" name='sex1'>顺性男</label>
+                            <label><input type="checkbox" name='sex1'>非常规性别</label>
+                            <label><input type="checkbox" name='sex1'>性别存疑</label>
+                            <label><input type="checkbox" name='sex1'>变体性别</label>
+                            <label><input type="checkbox" name='sex1'>间性人</label>
+                            <label><input type="checkbox" name='sex1'>男女皆非</label>
+                            <label><input type="checkbox" name='sex1'>非二元</label>
+                            <label><input type="checkbox" name='sex1'>其他</label>
+                            <label><input type="checkbox" name='sex1'>泛性别</label>
+                            <label><input type="checkbox" name='sex1'>跨性别</label>
+                            <label><input type="checkbox" name='sex1'>变性男</label>
+                            <label><input type="checkbox" name='sex1'>变性女</label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        <div id="datagrid1" class="mini-datagrid" style="height:240px;" url="other/data.json"
+                            idField="id" pageSize="10" multiSelect="true">
+                            <div property="columns">
+                                <div type="checkcolumn"></div>
+                                <div type="indexcolumn" width="60" headerAlign="center">序号</div>
+                                <div field="ComplaintReportingDate" width="110" allowSort="true" headerAlign="center"
+                                    dateFormat="yyyy-MM-dd" align="center">信访日期
+                                </div>
+                                <div field="TheName" width="70" headerAlign="center" allowSort="true" align="center">姓名
+                                </div>
+                                <div field="IdNumber" width="130" headerAlign="center" allowSort="true" align="center">
+                                    证件号</div>
+                                <div field="ContentType" width="130" headerAlign="center" allowSort="true"
+                                    align="center"> 内容分类</div>
+                                <div field="ProblemDependency" width="130" headerAlign="center" allowSort="true"
+                                    align="center">问题属地</div>
+                                <div field="LettersAndForm" width="90" headerAlign="center" allowSort="true"
+                                    align="center">信访形式</div>
+                                <div field="Status" width="130" headerAlign="center" allowSort="true" align="center">状态
+                                </div>
+                                <div field="Status" width="130" headerAlign="center" allowSort="true" align="center">状态
+                                </div>
+                                <div field="Status" width="130" headerAlign="center" allowSort="true" align="center">状态
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        1
+                    </div>
+                    <div class="row">
+                        2
+                    </div>
+                    <div class="row">
+                        3
+                    </div>
+                    <div class="row">
+                        4
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        1
+                    </div>
+                    <div class="row">
+                        2
+                    </div>
+                    <div class="row">
+                        3
+                    </div>
+                    <div class="row">
+                        4
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        1
+                    </div>
+                    <div class="row">
+                        2
+                    </div>
+                    <div class="row">
+                        3
+                    </div>
+                    <div class="row">
+                        4
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        1
+                    </div>
+                    <div class="row">
+                        2
+                    </div>
+                    <div class="row">
+                        3
+                    </div>
+                    <div class="row">
+                        4
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        1
+                    </div>
+                    <div class="row">
+                        2
+                    </div>
+                    <div class="row">
+                        3
+                    </div>
+                    <div class="row" id='row'>
+                        4
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+
+</html>

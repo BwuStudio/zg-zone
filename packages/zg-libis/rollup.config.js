@@ -1,8 +1,10 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import pkg from './package.json';
-import es3 from 'rollup-plugin-es3'
 import sass from 'rollup-plugin-sass';
+import postcss from 'rollup-plugin-postcss'
+import typescript from 'rollup-plugin-typescript';
+import tsconfig from './tsconfig.json'
 
 export default [
 
@@ -18,11 +20,14 @@ export default [
 		output: [
 			{ name:'bundle', file: pkg.iife, format: 'iife', legacy: true, sourcemap: true },
 			{ name:'bundle', file: pkg.browser, format: 'umd', legacy: true, sourcemap: true },
-			// { file: pkg.main, format: 'cjs', sourcemap: true },
-			// { file: pkg.module, format: 'es', sourcemap: true }
 		],
 		plugins: [
-			sass({ insert: true }),
+			// sass({ insert: true }),
+			typescript(tsconfig.compilerOptions),
+			postcss({
+				extensions:['.css', '.sss', '.pcss','scss'],
+				extract:false
+			}),
 			resolve(), // so Rollup can find `ms`
 			commonjs() // so Rollup can convert `ms` to an ES module
 		]

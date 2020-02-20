@@ -1,0 +1,97 @@
+@import "../var.scss";
+
+/* Input */
+
+input.gb_form,
+select.gb_form {
+  vertical-align: top;
+  height: $unit-height;
+  min-width: 100px;
+  display: inline-block;
+  line-height: $unit-height - 2px;
+  padding: 0 0 0 6px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #fff;
+}
+
+label.gb_form {
+  vertical-align: top;
+  display: inline-block;
+  padding: 0 3px 0 6px;
+  line-height: $unit-height;
+  height: $unit-height;
+}
+
+input.gb_form:focus,
+select.gb_form:focus,
+textarea.gb_form:focus {
+  border-color: #808891;
+}
+input.gb_form:disabled,
+select.gb_form:disabled,
+textarea.gb_form:disabled {
+  background-color: rgb(235, 235, 228);
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i} > {
+    input.gb_form,
+    select.gb_form,
+    textarea.gb_form {
+      width: 100%;
+    }
+  }
+}
+
+/* form */
+
+.legend {
+  height: $unit-height;
+  position: relative;
+  line-height: $unit-height;
+  display: block;
+  border-bottom: 2px solid #0b70c1;
+  margin: 4px;
+  padding: 0 6px;
+  color: #0b70c1;
+}
+
+fieldset .row {
+  width: 100%;
+  height: 32px;
+  padding: 3px 6px;
+  line-height: $unit-height;
+}
+
+/* grid system */
+
+label {
+  white-space: nowrap;
+  word-wrap: normal;
+  word-break: keep-all;
+  padding: 0 6px;
+}
+
+/* textarea */
+
+textarea.gb_form {
+  width: 100%;
+  line-height: 18px;
+  padding: 4px 8px;
+  resize: none;
+  height: 100%;
+  min-height: 72px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+textarea.gb_form:focus {
+  border-color: #808891;
+}
+
+.required:after {
+  content: "*";
+  color: red;
+}

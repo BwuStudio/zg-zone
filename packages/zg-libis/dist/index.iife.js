@@ -1,8 +1,5 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.bundle = {}));
-}(this, function (exports) { 'use strict';
+var bundle = (function (exports) {
+  'use strict';
 
   // Array.prototype polifill
   (function (window, Array) {
@@ -2082,7 +2079,7 @@
   exports.Tool = Tool;
   exports.Validate = Validate;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return exports;
 
-}));
-//# sourceMappingURL=index.umd.js.map
+}({}));
+//# sourceMappingURL=index.iife.js.map

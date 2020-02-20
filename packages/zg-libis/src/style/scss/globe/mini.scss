@@ -1,31 +1,33 @@
+@import '../var.scss';
+
 /* input-hook */
 
 .mini-datepicker {
   width: 100%;
-  height: 26px;
-  line-height: 26px;
+  height: $unit-height;
+  line-height: $unit-height;
 }
 
 .mini-buttonedit-border {
-  height: 24px;
+  height: $unit-height - 2px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 
 .mini-buttonedit-border > input {
-  line-height: 24px;
-  height: 24px;
+  line-height:  $unit-height - 2px;
+  height: $unit-height - 2px;
   font-size: 14px;
 }
 
 .mini-buttonedit-button,
 .mini-buttonedit-close {
-  height: 20px;
+  height:  $unit-height - 6px;
 }
 
 .mini-buttonedit {
   display: inline-block;
-  height: 26px;
+  height: $unit-height;
   width: 100%;
   /* float: left; */
 }

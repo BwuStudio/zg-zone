@@ -1,0 +1,53 @@
+form.common,
+form.mini {
+  width: 900px;
+  margin: 0 auto;
+  padding: 24px 0 24px 0;
+
+  &.mini {
+    padding: 0;
+
+    legend:first-child {
+      margin: 0 0 24px 0;
+    }
+    > fieldset {
+      margin: 0 0 36px 0;
+    }
+  }
+
+  > fieldset {
+    margin: 36px 0;
+    position: relative;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    min-width: auto;
+
+    .row {
+      height: auto;
+    }
+  }
+
+  legend {
+    line-height: 24px;
+    padding: 6px;
+    margin: 24px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    padding-left: 16px;
+    position: relative;
+    background-color: rgb(239, 245, 250);
+    width: 100%;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 6px;
+      background-color: rgb(10, 88, 151);
+      content: "";
+    }
+  }
+}
