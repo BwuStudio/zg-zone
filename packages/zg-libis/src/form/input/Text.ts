@@ -18,6 +18,7 @@ export default class Text extends Input<string>{
     protected reflashView() {
         if (this.target) this.target.remove()
         this.target = document.createElement('input')
+        this.target.className = "gb_form"
         this.target.onchange = e => { this.setValue(this.target.value) }
         this.container.appendChild(this.target)
     }

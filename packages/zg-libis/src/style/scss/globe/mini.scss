@@ -1,5 +1,10 @@
 @import "../var.scss";
 
+.mini-widget, body, .mini-button, .mini-menuitem, .mini-layout-region-header, .mini-panel-header, .mini-outlookbar-groupHeader, .mini-grid-headerCell, .mini-grid-cell, .mini-grid-columnproxy, .mini-listbox td, .mini-calendar, .mini-calendar-button, .mini-tabs, .mini-tree, .mini-textbox-input, .mini-buttonedit-input, .mini-textboxlist-input, .mini-textboxlist, .mini-pager, .mini-checkboxlist table label, .mini-radiobuttonlist table label, .mini-checkbox, .mini-checkboxlist, .mini-radiobuttonlist, .mini-radiobuttonlist label, .mini-layout, .mini-calendar, .mini-calendar-menu-month, mini-calendar-date, mini-calendar-menu-year, .mini-calendar-title {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+}
+
 /* input-hook */
 
 .gb_form.mini-datepicker {
@@ -17,7 +22,7 @@
 .gb_form .mini-buttonedit-border > input {
   line-height: $unit-height - 2px;
   height: $unit-height - 2px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .gb_form .mini-buttonedit-button,
@@ -43,6 +48,8 @@
   border-right: 1px solid #ccc;
   border-radius: 4px 4px 0 0;
 
+  width: 100%;
+
   background-color: rgb(247, 248, 250);
 
   & + .mini-grid > .mini-grid-border {
@@ -52,9 +59,13 @@
 
 .mini-grid-headerCell {
   background: rgb(247, 248, 250);
-  padding: 4px 0;
+  padding: 8px 0;
   font-weight: bold;
   color: #666;
+}
+
+.mini-grid-cell-inner{
+  padding: 8px 0;
 }
 
 .mini-datagrid-bar .mini-grid-cell-inner {

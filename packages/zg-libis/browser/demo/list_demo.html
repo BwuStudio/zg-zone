@@ -42,6 +42,14 @@
 
             mini.parse()
 
+            var search = Form({
+                "ss0":Form.Text(),
+                "ss1":Form.Text(),
+                "ss2":Form.Text(),
+                "ss3":Form.Text(),
+                "ss4":Form.Text(),
+            })
+
             Shelf.get('menuBtn')(
                 document.body.querySelector('#grid_export'), {
                 text: '导出',
@@ -66,6 +74,22 @@
                     )
                 })
             }
+            document.body.querySelector('#grid_trans').onclick = function () {
+                var btns = document.querySelector('#dg_btn')
+                if(document.querySelector('.mini-datagrid-bar')){
+                    document.querySelector('#search_panel').appendChild(btns)
+                    document.querySelector('.mini-datagrid-bar').remove()
+                }else{
+                    var bar = document.createElement('div')
+                    bar.className='mini-datagrid-bar'
+                    bar.appendChild(btns)
+                    document.querySelector('#datagrid1').parentNode.insertBefore(
+                        bar,
+                        document.querySelector('#datagrid1')
+                    )
+                }
+            }
+
             document.body.querySelector('#grid_delete').onclick = function () {
                 var s = mini.get('datagrid1').getSelecteds()
                 if (!s.length) return alert('请选择人员')
@@ -198,20 +222,40 @@
 <body>
     <div class="globe">
         <div class="head">
-            <div class="row">
-                <a href="" class="block_btn">查询</a>
+            <div class="row" id="search_panel">
+                <div class="unit" style="width:300px">
+                    <label class="col-4">起始日期:</label>
+                    <div class="col-8" data-name-ss0></div>
+                </div>
+                <div class="unit" style="width:300px">
+                    <label class="col-4">终止日期:</label>
+                    <div class="col-8" data-name-ss1></div>
+                </div>
+                <div class="unit" style="width:300px">
+                    <label class="col-4">主管单位:</label>
+                    <div class="col-8" data-name-ss2></div>
+                </div>
+                <div class="unit" style="width:300px">
+                    <label class="col-4">内容分类:</label>
+                    <div class="col-8" data-name-ss3></div>
+                </div>
+                <div class="unit" style="width:300px">
+                    <label class="col-4">近三年状态:</label>
+                    <div class="col-8" data-name-ss4></div>
+                </div>
+                <div class="unit">
+                    <a href="" class="block_btn">查询</a>
+                </div>
+                
+                <div id="dg_btn" class="unit_end">
+                    <a id="grid_add" class="block_btn">新增</a>
+                    <a id="grid_delete" class="block_btn">批量删除</a>
+                    <a id="grid_export" class="block_btn">导出</a>
+                    <a id="grid_trans" class="block_btn">切换</a>
+                </div>
             </div>
         </div>
         <div class="body flex-col">
-            <div class="mini-datagrid-bar">
-                <div class="row">
-                    <div class="btn_group right">
-                        <a id="grid_add" class="block_btn">新增</a>
-                        <a id="grid_delete" class="block_btn">批量删除</a>
-                        <a id="grid_export" class="block_btn">导出</a>
-                    </div>
-                </div>
-            </div>
             <div id="datagrid1" class="mini-datagrid" style="flex: 1;height:100%">
             </div>
         </div>
