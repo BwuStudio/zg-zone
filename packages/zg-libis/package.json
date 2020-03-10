@@ -7,7 +7,8 @@
   "browser": "dist/index.umd.js",
   "iife": "dist/index.iife.js",
   "scripts": {
-    "start": "node ./server.js"
+    "start": "node ./server.js",
+    "build": "rollup -c"
   },
   "keywords": [],
   "author": "",

@@ -1,27 +1,43 @@
-import Input from "./Input";
+import Input, { Conf } from "./Input";
 
 type Value = string
 type Text = string
 
-declare const Shelf:any
+declare const Shelf: any
 
-export default class DetailSelect extends Input<[Value, Text]>{
+type Config = {
+    readonly: boolean
+}
 
-    static gen(s: string, config: { 
+export default class DetailSelect extends Input<[Value, Text], Config>{
+
+    static gen(s: string, config: {
         container: HTMLElement
-        table: string 
-    }) {
-        return new this(s, config.table,config.container)
+        table: string
+    } & Conf<Config>) {
+        return new this(s, config.table, config)
+    }
+
+    static config = {
+        readonly: false
     }
 
     list: { value: string, text: string }[] = []
 
-    tableName:string
+    tableName: string
 
     private target: any = null
 
-    constructor(id: string, tableName: string,container:HTMLElement) {
-        super(id, container)
+    constructor(id: string, tableName: string, config: Conf<Config>) {
+
+        super(
+            id,
+            Object.assign(
+                {},
+                DetailSelect.config,
+                config)
+        )
+
         this.tableName = tableName
         this.reflashView()
     }
@@ -29,9 +45,12 @@ export default class DetailSelect extends Input<[Value, Text]>{
     protected reflashView() {
         if (this.target) this.container.innerHTML = ''
         const c = document.createElement('input')
-        c.style.width="100%"
+        c.style.width = "100%"
         this.container.appendChild(c)
-        this.target = Shelf.get('detailSelect').input(c,this.tableName)
+        this.target = Shelf.get('detailSelect').input(c, this.tableName)
+        if(this.config.readonly){
+            this.target.disable()
+        }
     }
 
     getValue() {

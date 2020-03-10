@@ -8,6 +8,7 @@ import Msger from './msger/index'
 import Form from './form/index'
 import Dom from './dom/index'
 import Tool from './tool/index'
+import Scope from './scope/index'
  
 export {
     Validate, // 验证工具
@@ -16,7 +17,8 @@ export {
     Msger,
     Dom,
     Tool,
-    Form
+    Form,
+    Scope
 }
 
 
@@ -27,3 +29,4 @@ window.Msger = Msger
 window.Dom = Dom
 window.Tool = Tool
 window.Form = Form
+window.Scope = Scope

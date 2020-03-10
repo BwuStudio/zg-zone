@@ -1,21 +1,39 @@
-import Input from "./Input";
+import Input, { Conf } from "./Input";
 
 
 type Value = string
 type Text = string
 
-export default class Radio extends Input<[Value, Text]>{
 
-    static gen(s: string, config: {
-        container: HTMLElement
-    }) {
-        return new this(s, config.container)
+type Config = {
+    readonly: boolean
+}
+
+
+export default class Radio extends Input<[Value, Text], Config>{
+
+    static gen(s: string, config: Conf<Config>) {
+        return new this(s, config)
+    }
+
+    static config = {
+        readonly: false
     }
 
     list: { value: string, text: string }[] = []
 
-    constructor(id: string, cntr: HTMLElement) {
-        super(id, cntr)
+    constructor(
+        id: string,
+        config: Conf<Config>) {
+
+        super(
+            id,
+            Object.assign(
+                {},
+                Radio.config,
+                config)
+        )
+
         this.uid = Math.floor(Math.random() * 10000).toString()
         this.reflashView()
     }
@@ -31,6 +49,7 @@ export default class Radio extends Input<[Value, Text]>{
 
             r.type = 'radio'
             r.name = this.id + this.uid
+            r.disabled = this.config.readonly
             r.value = v.value
             s.innerHTML = v.text
 

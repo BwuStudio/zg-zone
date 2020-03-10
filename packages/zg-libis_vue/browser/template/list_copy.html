@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+ 
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/theme/js/miniUI37/miniui.js"></script>
+    <script src="/dist/index.umd.js"></script>
+
+
+    <!-- miniUI 样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/js/miniUI37/themes/default/miniui.css">
+    <!-- 字体图标 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/iconfont/iconfont.css">
+    <!-- 样式重置 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/reset.css">
+    <!-- 全局样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/globe.css">
+
+    <!-- 下拉菜单按钮组件 -->
+    <script src='/gbrm/common/component/popList.shelf.js' class="shelf-popList"></script>
+    <script src='/gbrm/common/component/menuCheck.shelf.js' class="shelf-menuCheck"></script>
+    <script src='/gbrm/common/component/modal.shelf.js' class="shelf-modal"></script>
+
+    <script src="./list_copy.js"></script>
+
+    <title>已登记人员</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="globe with_head with_head_row_2">
+        <div class="head">
+            <div class="row">
+                <select class="gb_form">
+                    <option value="1">全部人员</option>
+                    <option value="1">缓议人员</option>
+                </select>
+
+                <input type="checkbox">
+
+                <label class="gb_form">上一环节：</label>
+
+                <a id="output_btn" class="block_btn">输出<i style="float: right" class="iconfont icon-expandmore"></i></a>
+
+                <a class="block_btn">查询</a>
+
+                <div class="btn_group right">
+                    <a class="block_btn" id="selectPeople">提取人员</a>
+                    <a class="block_btn">导入审批</a>
+                    <a class="block_btn">职务调整</a>
+                    <a class="block_btn">取消登记</a>
+                </div>
+            </div>
+
+            <div class="row">
+                的发动机辅导老师国家法律帝国建立的国家的房间里可根据司空见惯了多少价格来访接待室
+            </div>
+        </div>
+        <div class="body">
+            <div class="row" style="float: left;width:50%;height: 230px;padding-right:5px">
+                <fieldset style="width: 100%;height:100%;border:1px solid #ccc;">
+                    <div class="legend">登记信息</div>
+                    <div class="row">
+                        <div class="btn_group right">
+                            <a class="block_btn">提取人员</a>
+                            <a class="block_btn">导入审批</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                        <label class="gb_form col-2">上一环节：</label>
+                        <select class="gb_form col-4">
+                            <option value="1">全部人员</option>
+                            <option value="1">缓议人员</option>
+                        </select>
+                    </div>
+                    <div class="row" style="text-align: center">
+                        <input type="checkbox">
+                        <label class="gb_form ">环节</label>
+                        <input type="checkbox">
+                        <label class="gb_form ">环节</label>
+                        <input type="checkbox">
+                        <label class="gb_form ">环节</label>
+                        <input type="checkbox">
+                        <label class="gb_form">环节</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row" style="float: left;width:50%;height: 230px;padding-left:5px">
+                <fieldset style="width: 100%;height:100%;border:1px solid #ccc;">
+                    <div class="legend">登记信息</div>
+                    <div class="row">
+                        <div class="btn_group right">
+                            <a class="block_btn">提取人员</a>
+                            <a class="block_btn">导入审批</a>
+                        </div>
+                    </div>
+                    <div class="row" style="height:154px;overflow:auto">
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <fieldset>
+                <div class="legend">登记信息</div>
+                <div class="row" style="height: 300px">
+
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+</body>
+
+</html>

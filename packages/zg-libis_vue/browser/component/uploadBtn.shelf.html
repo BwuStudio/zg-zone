@@ -1,0 +1,27 @@
+<div class="uploadBtn">
+    <div class="">
+        <label for="_formID_file" class="upload_label">请选择文件</label>
+        <input type="file" name="qqfile" class="upload_file_input" id="_formID_file" accept="${accept}"  ${multiple?'multiple="multiple"':''} />
+        <a class="block_btn upload_btn">上传</a>
+    </div>
+    <style>
+
+        .uploadBtn .upload_label{
+            height: 26px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 0 12px;
+            line-height: 24px;
+            border-radius: 4px;
+            max-width: 200px;
+            text-align: center; 
+        }
+
+        .uploadBtn .upload_file_input{
+            height: 0;
+            width: 0;
+            display: inline-block;
+        }
+
+    </style>
+</div>

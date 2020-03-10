@@ -1,20 +1,28 @@
-import Input from "./Input";
+import Input, { Conf } from "./Input";
 
 type Value = string
 type Text = string
 
-export default class Select extends Input<[Value, Text]>{
+type Config = {
+    readonly: true
+}
 
-    static gen(s: string, config: {
-        container: HTMLElement
-    }) {
-        return new this(s, config.container)
+export default class Select extends Input<[Value, Text], Config>{
+
+    static gen(s: string, config: Conf<Config>) {
+        return new this(s, config)
+    }
+
+    static config = {
+        readonly: false
     }
 
     list: { value: string, text: string }[] = []
 
-    constructor(id: string, container: HTMLElement) {
-        super(id, container)
+    constructor(id: string, config: Conf<Config>) {
+        super(id, Object.assign({},
+            Select.config,
+            config))
         this.reflashView()
     }
 
@@ -25,6 +33,7 @@ export default class Select extends Input<[Value, Text]>{
 
         this.target = document.createElement('select')
         this.target.className = 'gb_form'
+        this.target.disabled = this.config.readonly
         this.target.onchange = e => {
             const c = this.list.find(v => v.value === this.target.value)
             this.setValue(c ? [c.value, c.text] : null)

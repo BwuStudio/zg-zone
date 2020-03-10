@@ -51,7 +51,7 @@
             })
 
             Shelf.get('menuBtn')(
-                document.body.querySelector('#grid_export'), {
+                document.querySelector('#grid_export'), {
                 text: '导出',
                 list: [
                     { id: "log", text: '控制台' },
@@ -67,14 +67,14 @@
                 }
             })
 
-            document.body.querySelector('#grid_add').onclick = function () {
+            document.querySelector('#grid_add').onclick = function () {
                 showSQRForm(null, function (data) {
                     mini.get('datagrid1').setData(
                         [data].concat(mini.get('datagrid1').getData())
                     )
                 })
             }
-            document.body.querySelector('#grid_trans').onclick = function () {
+            document.querySelector('#grid_trans').onclick = function () {
                 var btns = document.querySelector('#dg_btn')
                 if(document.querySelector('.mini-datagrid-bar')){
                     document.querySelector('#search_panel').appendChild(btns)
@@ -90,7 +90,7 @@
                 }
             }
 
-            document.body.querySelector('#grid_delete').onclick = function () {
+            document.querySelector('#grid_delete').onclick = function () {
                 var s = mini.get('datagrid1').getSelecteds()
                 if (!s.length) return alert('请选择人员')
 

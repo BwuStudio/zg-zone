@@ -5,7 +5,7 @@ export default function (src) {
             url: src, //需要获取的页面内容
             async: true,
             success: function (data) {
-                res(data)
+                res(data.replace(/sf-style-attr/g,'style'))
             },
             error: function (data) {
                 console.warn('shelf load error: ' + data)

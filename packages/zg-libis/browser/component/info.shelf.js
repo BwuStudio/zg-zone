@@ -70,7 +70,7 @@
                     margin: '7px 0',
 
                     lineHeight: '26px;',
-                    overflow:'hidden',
+                    overflow: 'hidden',
                     transform: "translate(-50%,0)",
                     width: 'auto',
                     position: 'relative',
@@ -127,28 +127,30 @@
                         v.innerHTML = msg || ''
                     }))
 
-                    $.extend(v.style, msgStyle,{opacity:0})
-                    setTimeout(function(){$.extend(v.style, msgStyle,{opacity:1})}, 0);
+                    $.extend(v.style, msgStyle, { opacity: 0 })
+                    setTimeout(function () { $.extend(v.style, msgStyle, { opacity: 1 }) }, 0);
                 })
 
-                var br = Dom('<div></div>',function(v){v.style.marginTop="-10px"})
-            
+                var br = Dom('<div></div>', function (v) { v.style.marginTop = "-10px" })
+
                 cntr.appendChild(br)
                 cntr.appendChild(msg)
 
-                setTimeout(function(){ $.extend(msg.style, {
-                    opacity:0,
-                    height:0,
-                    margin:0,
-                    padding:0,
-                    borderWidth:0,
-                    boxShadow:'0 2px 4px rgba(0,0,0,0)'
-                })}, 5000);
+                setTimeout(function () {
+                    $.extend(msg.style, {
+                        opacity: 0,
+                        height: 0,
+                        margin: 0,
+                        padding: 0,
+                        borderWidth: 0,
+                        boxShadow: '0 2px 4px rgba(0,0,0,0)'
+                    })
+                }, 3000);
 
-                setTimeout(function(){
+                setTimeout(function () {
                     $(msg).remove()
                     $(br).remove()
-                }, 5500);
+                }, 3500);
 
 
             }
@@ -171,15 +173,15 @@
                     v.innerHTML = content
                 })
 
-                $(this.root).find('.cancel_btn,.iconfont.icon-guanbi').get().forEach(function (v) {  
+                $(this.root).find('.cancel_btn,.iconfont.icon-guanbi').get().forEach(function (v) {
                     v.onclick = function () {
                         _this.send('close', [false])
                         _this.destroy()
                     }
                 })
 
-                
-                $(this.root).find('.cancel_btn').get().forEach(function (v) {  
+
+                $(this.root).find('.cancel_btn').get().forEach(function (v) {
                     if (type === 'alert') v.innerText = '确定'
                 })
 
@@ -205,4 +207,5 @@
             }
         }
     })
+
 })()

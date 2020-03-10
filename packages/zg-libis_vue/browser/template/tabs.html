@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/theme/js/miniUI37/miniui.js"></script>
+    <script src="/dist/index.umd.js"></script>
+
+
+    <!-- miniUI 样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/js/miniUI37/themes/default/miniui.css">
+    <!-- 字体图标 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/iconfont/iconfont.css">
+    <!-- 样式重置 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/reset.css">
+    <!-- 全局样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/globe.css">
+
+    <!-- 下拉菜单按钮组件 -->
+    <script src='/gbrm/common/component/popList.shelf.js' class="shelf-popList"></script>
+    <script src='/gbrm/common/component/menuBtn.shelf.js' class="shelf-menuBtn"></script>
+    <script src='/gbrm/common/component/simpleTabs.shelf.js' class="shelf-simpleTabs"></script>
+
+
+    <script src="./tabs.js"></script>
+
+    <title>已登记人员</title>
+
+
+    <style>
+    .table_container{
+        width:900px;
+        margin: 0 auto;
+        border-top: 1px solid #ccc;
+    }
+    .table_container table.list_table{
+        border-top:none;
+    }
+    .table_container td{
+        font-size: 18px;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="globe">
+        <div id="panel1" class="panel with_head">
+            <div class="head" style="border-bottom-width:0;padding: 0">
+                <div class="row" style="border-bottom:1px solid #ccc;padding:3px 8px;">
+                    <div class="btn_group right">
+                        <a class="block_btn">保存</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="body">
+                <div class="row" style="font-weight: bold;text-align:center;font-size:20px;height: 48px;line-height: 48px;">市管干部任免啥啥啥啥啥啥啥啥啥啥啥啥啥啥</div>
+                <div class="table_container">
+                        <table class="list_table">
+                            <tr class="control_width">
+                                <td style="width: 100px"></td>
+                                <td style="width: 100px"></td>
+                                <td style="width: 100px"></td>
+                                <td style="width: 100px"></td>
+                                <td style="width: 100px"></td>
+                                <td style="width: 100px"></td>
+                                <td style="width: 100px"></td>
+                                <td ></td>
+                                <td style="width: 100px"></td>
+                            </tr>
+                                <tr>
+                                    <td rowspan="4">基本情况</td>
+                                    <td>姓名</td>
+                                    <td></td>
+                                    <td>性别</td>
+                                    <td></td>
+                                    <td>出生年月</td>
+                                    <td></td>
+                                    <td>入党时间</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>名族</td>
+                                    <td></td>
+                                    <td>学历</td>
+                                    <td></td>
+                                    <td>任同职务集时间</td>
+                                    <td></td>
+                                    <td>籍贯</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>参加工作时间</td>
+                                    <td></td>
+                                    <td>学位</td>
+                                    <td></td>
+                                    <td>任现职时间</td>
+                                    <td></td>
+                                    <td>出生地</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>现任职务</td>
+                                    <td colspan="7"></td>
+                                </tr>
+                        </table>
+                    
+                        <table class="list_table"  >
+                            <tr>
+                                <td rowspan="16">工作程序纪实</td>
+                                <td rowspan="2">初始提名</td>
+                                <td>拟任职务</td>
+                                <td colspan="6"></td>
+                                <td>是否超职数配置</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>动议理由</td>
+                                <td colspan="6"></td>
+                                <td>提名人</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="13">民主推荐</td>
+                                <td rowspan="3">会议投票推荐</td>
+                                <td rowspan="2">推荐时间</td>
+                                <td rowspan="2"></td>
+                                <td>人数</td>
+                                <td></td>
+                                <td>比例</td>
+                                <td></td>
+                                <td rowspan="2">是否达到规定比例</td>
+                                <td rowspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>得票</td>
+                                <td></td>
+                                <td>排名</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>参加推荐范围</td>
+                                <td colspan="5"></td>
+                                <td>是否达到规定比例</td>
+                                <td></td>
+                            </tr>
+                    
+                            <tr>
+                                <td rowspan="3">个别谈话推荐</td>
+                                <td rowspan="2">推荐时间</td>
+                                <td rowspan="2"></td>
+                                <td>人数</td>
+                                <td></td>
+                                <td>比例</td>
+                                <td></td>
+                                <td rowspan="2">是否达到规定比例</td>
+                                <td rowspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>得票</td>
+                                <td></td>
+                                <td>排名</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>参加推荐范围</td>
+                                <td colspan="5"></td>
+                                <td>是否达到规定比例</td>
+                                <td></td>
+                            </tr>
+                    
+                            <tr>
+                                <td rowspan="6">二次推荐</td>
+                                <td rowspan="2">会议投票推荐</td>
+                                <td rowspan="2"></td>
+                                <td>人数</td>
+                                <td></td>
+                                <td>比例</td>
+                                <td></td>
+                                <td rowspan="2">是否达到规定比例</td>
+                                <td rowspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>得票</td>
+                                <td></td>
+                                <td>排名</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>参加推荐范围</td>
+                                <td colspan="5"></td>
+                                <td>是否达到规定比例</td>
+                                <td></td>
+                            </tr>
+                    
+                            <tr>
+                                <td rowspan="2">个别谈话推荐</td>
+                                <td rowspan="2"></td>
+                                <td>人数</td>
+                                <td></td>
+                                <td>比例</td>
+                                <td></td>
+                                <td rowspan="2">是否达到规定比例</td>
+                                <td rowspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>得票</td>
+                                <td></td>
+                                <td>排名</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>参加推荐范围</td>
+                                <td colspan="5"></td>
+                                <td>是否达到规定比例</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>组织推荐</td>
+                                <td colspan="6"></td>
+                            </tr>
+                        </table>
+                    
+                        <table class="list_table"  >
+                            <tr>
+                                <td rowspan="13">工作程序纪实</td>
+                                <td rowspan="4">竞争上岗公开选拔</td>
+                                <td>选拔方式</td>
+                                <td colspan="8"></td>
+                            </tr>
+                            <tr>
+                                <td>本职位笔试人数</td>
+                                <td colspan="2"></td>
+                                <td>面试人数</td>
+                                <td colspan="2"></td>
+                                <td>名族测评情况</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>笔试成绩</td>
+                                <td colspan="2"></td>
+                                <td>面试成绩</td>
+                                <td colspan="2"></td>
+                                <td>综合成绩</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>排名</td>
+                                <td colspan="2"></td>
+                                <td>排名</td>
+                                <td colspan="2"></td>
+                                <td>排名</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="8">组织考察</td>
+                                <td rowspan="8">考察</td>
+                                <td colspan="2">确定考察对象</td>
+                                <td colspan="6"></td>
+                    
+                            </tr>
+                            <tr>
+                                <td>考察时间</td>
+                                <td></td>
+                                <td>是否发布考察公告</td>
+                                <td></td>
+                                <td>是否差额考察</td>
+                                <td></td>
+                                <td>谈话人数</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>谈话范围</td>
+                                <td colspan="5"></td>
+                                <td>是否达到规定要求</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>民族测评时间</td>
+                                <td></td>
+                                <td>参加测评人数</td>
+                                <td></td>
+                                <td>测评范围</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>民族测评结果</td>
+                                <td colspan="2"></td>
+                                <td>考察组长</td>
+                                <td></td>
+                                <td>考察组成员</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>是否进行回避</td>
+                                <td></td>
+                                <td>有无举报</td>
+                                <td></td>
+                                <td>调查情况及结论</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>考察组意见</td>
+                                <td colspan="2"></td>
+                                <td>听取纪检监</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>组织人事部门</td>
+                                <td colspan="6"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">酝酿</td>
+                                <td colspan="2">酝酿范围</td>
+                                <td colspan="3"></td>
+                                <td colspan="2">双重管理干部征</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">工作部门领导</td>
+                                <td colspan="3"></td>
+                                <td colspan="2">非党干部征求</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">谈论决定</td>
+                                <td>党委(党组)会议召开时间</td>
+                                <td></td>
+                                <td>应到人数</td>
+                                <td></td>
+                                <td>实到人数</td>
+                                <td></td>
+                                <td>表决结果</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>全委会表决时间</td>
+                                <td></td>
+                                <td>应到人数</td>
+                                <td></td>
+                                <td>实到人数</td>
+                                <td></td>
+                                <td>表决结果</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>征求全委会意见时间</td>
+                                <td></td>
+                                <td>应征求人数</td>
+                                <td></td>
+                                <td>实征求人数</td>
+                                <td></td>
+                                <td>征求意见方式及结果</td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
+                        <table class="list_table"  >
+                            <tr>
+                                <td rowspan="6">工程程序纪实</td>
+                                <td>任前公示</td>
+                                <td>公示时间</td>
+                                <td></td>
+                                <td>公示形式</td>
+                                <td></td>
+                                <td>有无举报</td>
+                                <td></td>
+                                <td>调查情况及结论</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">任职</td>
+                                <td rowspan="2">履行法定程序</td>
+                                <td>会议时间</td>
+                                <td></td>
+                                <td>会议名称</td>
+                                <td></td>
+                                <td>任免职时间</td>
+                                <td></td>
+                                <td>任职谈话人</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">选举或表</td>
+                                <td rowspan="6"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">试用</td>
+                                <td>试用期起止时间</td>
+                                <td></td>
+                                <td>民族测评时间</td>
+                                <td></td>
+                                <td>民主测评范围</td>
+                                <td colspan="2"></td>
+                                <td>民主测评情况</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>期满考核时间</td>
+                                <td></td>
+                                <td>考核人员</td>
+                                <td colspan="3"></td>
+                                <td>考核结论</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td>取消任职情况</td>
+                                <td colspan="8"></td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+        </div>
+        <div id="panel3"></div>
+        <div id="panel4"></div>
+        <div id="panel5"></div>
+        
+        <div id="panel2" class="panel with_head">
+            <div class="head" >
+                <div class="row" >4</div>
+            </div>
+            <div class="body">
+                <div id="datagrid1" class="mini-datagrid" style="height:100%;" url="other/data.json" idField="id"
+                    pageSize="10" multiSelect="true">
+                    <div property="columns">
+                        <div type="checkcolumn"></div>
+                        <div type="indexcolumn" width="60" headerAlign="center">序号</div>
+                        <div field="ComplaintReportingDate" width="110" allowSort="true" headerAlign="center"
+                            dateFormat="yyyy-MM-dd" align="center">信访日期
+                        </div>
+                        <div field="TheName" width="70" headerAlign="center" allowSort="true" align="center">姓名
+                        </div>
+                        <div field="IdNumber" width="130" headerAlign="center" allowSort="true" align="center">
+                            证件号</div>
+                        <div field="ContentType" width="130" headerAlign="center" allowSort="true" align="center"> 内容分类
+                        </div>
+                        <div field="ProblemDependency" width="130" headerAlign="center" allowSort="true" align="center">
+                            问题属地
+                        </div>
+                        <div field="LettersAndForm" width="90" headerAlign="center" allowSort="true" align="center">信访形式
+                        </div>
+                        <div field="Status" width="130" headerAlign="center" allowSort="true" align="center">状态
+                        </div>
+                        <div field="Status" width="130" headerAlign="center" allowSort="true" align="center">状态
+                        </div>
+                        <div field="Status" width="130" headerAlign="center" allowSort="true" align="center">状态
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

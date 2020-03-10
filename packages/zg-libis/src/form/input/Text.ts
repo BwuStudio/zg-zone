@@ -1,15 +1,23 @@
-import Input from "./Input";
+import Input, { Conf } from "./Input";
 
-export default class Text extends Input<string>{
+type Config = {
+    readonly: boolean
+}
 
-    static gen(s: string, config: {
-        container: HTMLElement
-    }) {
-        return new this(s, config.container)
+export default class Text extends Input<string, Config>{
+
+    static config = {
+        readonly: false
     }
 
-    constructor(id: string, container: HTMLElement) {
-        super(id, container)
+    static gen(s: string, config: Conf<Config>) {
+        return new this(s, config)
+    }
+
+    constructor(id: string, config: Conf<Config>) {
+        super(id, Object.assign({},
+            Text.config,
+            config))
         this.reflashView()
     }
 
@@ -18,6 +26,7 @@ export default class Text extends Input<string>{
     protected reflashView() {
         if (this.target) this.target.remove()
         this.target = document.createElement('input')
+        this.target.disabled = this.config.readonly
         this.target.className = "gb_form"
         this.target.onchange = e => { this.setValue(this.target.value) }
         this.container.appendChild(this.target)

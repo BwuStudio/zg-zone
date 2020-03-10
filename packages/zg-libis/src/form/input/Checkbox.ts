@@ -1,78 +1,95 @@
-import Input from "./Input";
+import Input, { Conf } from "./Input";
 
 
 type Value = string
 type Text = string
 
-export default class checkbox extends Input<[Value, Text][]>{
+type Config = {
+  readonly: boolean
+}
 
+export default class checkbox extends Input<
+  [Value, Text][], Config>{
 
-    static gen(s: string, config: {
-        container: HTMLElement
-    }) {
-        return new this(s, config.container)
-    }
+  static config = {
+    readonly: false
+  }
 
-    list: { value: string, text: string }[] = []
+  static gen(s: string, config: Conf<Config>) {
+    return new this(s, config)
+  }
 
-    constructor(id: string, container: HTMLElement) {
-        super(id, container)
-        this.uid = Math.floor(Math.random()*10000).toString()
-        this.reflashView()
-    }
+  list: { value: string, text: string }[] = []
 
-    private uid :string
+  constructor(
+    id: string,
+    config:  Conf<Config>) {
 
-    protected reflashView() {
-        this.target.forEach(v => { v[0].remove() })
-        this.target = this.list.map(v => {
-            const r = document.createElement('input')
-            const l = document.createElement('label')
-            const s = document.createElement('span')
+    super(
+      id,
+      Object.assign(
+        {},
+        checkbox.config,
+        config)
+    )
 
-            r.type = 'checkbox'
-            r.name = this.id + this.uid
-            r.value = v.value
-            s.innerHTML = v.text
+    this.uid = Math.floor(Math.random() * 10000).toString()
+    this.reflashView()
+  }
 
-            r.checked = this.value?.find(c => c[0] === r.value) ? true : false
+  private uid: string
 
-            l.appendChild(r)
-            l.appendChild(s)
+  protected reflashView() {
+    this.target.forEach(v => { v[0].remove() })
+    this.target = this.list.map(v => {
+      const r = document.createElement('input')
+      const l = document.createElement('label')
+      const s = document.createElement('span')
 
-            return [l, r]
-        })
+      r.type = 'checkbox'
+      r.name = this.id + this.uid
+      r.value = v.value
+      r.disabled = this.config.readonly
+      s.innerHTML = v.text
 
-        this.target.forEach(([l, r]) => {
-            
-            this.container.appendChild(l)
+      r.checked = this.value?.find(c => c[0] === r.value) ? true : false
 
-            r.onchange = e => this.setValue(
-                this.list.filter((v, i) =>
-                    this.target[i]?.[1].checked).map(v =>
-                        [v.value, v.text]))
-        })
-    }
+      l.appendChild(r)
+      l.appendChild(s)
 
-    private target: [HTMLLabelElement, HTMLInputElement][] = []
+      return [l, r]
+    })
 
-    getValue() {
-        return this.value || []
-    }
+    this.target.forEach(([l, r]) => {
 
-    setOpions(c: { [value: string]: string }) {
-        this.list = Object.keys(c).map(value => {
-            const text = c[value] || ''
-            return { value, text }
-        })
-        this.reflashView()
-    }
+      this.container.appendChild(l)
 
-    setValue(v: [Value, Text][] | null) {
-        const c = v || []
-        this.value = c
-        this.target.forEach(v => {
-            v[1].checked = this.value?.find(c => c[0] === v[1].value) ? true : false
-        })
-    }
+      r.onchange = e => this.setValue(
+        this.list.filter((v, i) =>
+          this.target[i]?.[1].checked).map(v =>
+            [v.value, v.text]))
+    })
+  }
+
+  private target: [HTMLLabelElement, HTMLInputElement][] = []
+
+  getValue() {
+    return this.value || []
+  }
+
+  setOpions(c: { [value: string]: string }) {
+    this.list = Object.keys(c).map(value => {
+      const text = c[value] || ''
+      return { value, text }
+    })
+    this.reflashView()
+  }
+
+  setValue(v: [Value, Text][] | null) {
+    const c = v || []
+    this.value = c
+    this.target.forEach(v => {
+      v[1].checked = this.value?.find(c => c[0] === v[1].value) ? true : false
+    })
+  }
 }

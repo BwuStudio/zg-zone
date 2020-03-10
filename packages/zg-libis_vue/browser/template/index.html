@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="decorator" content="common_top_withfun" />
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/theme/js/miniUI37/miniui.js"></script>
+    <script src="/dist/index.umd.js"></script>
+
+
+    <!-- miniUI 样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/js/miniUI37/themes/default/miniui.css">
+    <!-- 字体图标 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/iconfont/iconfont.css">
+    <!-- 样式重置 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/reset.css">
+    <!-- 全局样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/globe.css">
+
+    <!-- 下拉菜单按钮组件 -->
+    <script src='/gbrm/common/component/popList.shelf.js' class="shelf-popList"></script>
+    <script src='/gbrm/common/component/menuCheck.shelf.js' class="shelf-menuCheck"></script>
+    <script src='/gbrm/common/component/modal.shelf.js' class="shelf-modal"></script>
+
+    <script src="./index.js"></script>
+
+    <title>已登记人员</title>
+
+    <style>
+        .home-with_padding {
+            padding: 10px !important;
+        }
+
+        .home-body {
+            padding: 10px;
+            background-color: rgb(251, 251, 253)
+        }
+
+        .home-block {
+            float: left;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .home-goble.with_sider {
+            margin-left: 140px !important;
+        }
+
+        .home-sider {
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-bottom: 20px;
+            left: -140px !important;
+            background-color: rgb(251, 251, 253) !important;
+            border: none !important;
+            width: 140px !important;
+        }
+
+
+        .home-panel {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            background-color: #fff;
+            border: 1px solid rgb(234, 237, 243);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(73, 73, 73, 0.06);
+            padding-top: 66px
+        }
+
+        .home-panel>.home-title {
+            height: 66px;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            border-bottom: 1px solid rgb(234, 237, 243);
+            line-height: 65px;
+            color: rgb(73, 73, 73);
+            font-size: 18px;
+            font-weight: 900;
+            padding: 0 30px;
+        }
+
+        a.home-more {
+            font-size: 14px;
+            font-weight: normal;
+            color: rgb(43, 142, 221);
+            float: right;
+        }
+
+        ol.home-block {
+            overflow: auto;
+            padding: 10px 0;
+        }
+
+        ol.home-block>li {
+            line-height: 32px;
+            font-size: 14px;
+            padding-left: 30px;
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        ol.home-block#book-right>li,
+        ol.home-block#book-left>li {
+            line-height: 26px;
+            font-size: 14px;
+            padding-left: 30px;
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 10%;
+            ;
+        }
+
+        ol.home-block#book-right,
+        ol.home-block#book-left {
+            height: 100%;
+        }
+
+        ol.home-block#book-right>li:before,
+        ol.home-block#book-left>li:before {
+            content: '';
+            width: 100%;
+            display: block;
+            position: absolute;
+            top: 14px;
+            border-top: 1px dotted rgb(216, 216, 216);
+            z-index: 0;
+        }
+
+        ol.home-block#book-right .home-book-index,
+        ol.home-block#book-left .home-book-index {
+            height: 100%;
+            width: auto;
+            line-height: 26px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding-right: 20px;
+            background: #fff;
+            color: rgb(164, 166, 171);
+            font-size: 13px;
+            padding-right: 30px;
+            padding-left: 10px;
+        }
+
+        ol.home-block#book-right span,
+        ol.home-block#book-left span {
+            background: #fff;
+            z-index: 1;
+            padding-right: 18px;
+            position: relative;
+        }
+
+
+        .home-todo-title {
+            height: 45px;
+            line-height: 65px;
+            padding-left: 30px;
+            color: rgb(66, 66, 66);
+            font-size: 14px;
+        }
+
+        .home-todo-content {
+            height: 30px;
+            line-height: 30px;
+            padding-left: 30px;
+            display: table-cell;
+        }
+
+        #em-todo-num {
+            font-size: 24px;
+            color: rgb(255, 0, 0);
+            display: inline-block;
+            width: 40px;
+            font-weight: 900;
+        }
+
+        #all-todo-num {
+            font-size: 24px;
+            color: rgb(11, 125, 215);
+            display: inline-block;
+            width: 40px;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="globe with_sider home-goble">
+        <div class="sider home-sider">
+            <div class="home-panel">
+                <div class="home-title" style="padding:0;text-align:center">快捷功能</div>
+                <ol class="home-block" id="shotcut"></ol>
+            </div>
+        </div>
+        <div class="body home-body home-with_padding">
+            <div class="home-block" style="width: 70%;padding-top:190px;">
+                <div class="home-block home-with_padding" style="height: 190px;position:absolute;top:0">
+                    <div class="home-panel">
+                        <div class="home-title">代办事项 <a href="" class="home-more">更多</a></div>
+                        <div class="home-block" style="width: 50%;padding-left: 120px;">
+                            <div class="home-todo-title">所有代办事项</div>
+                            <div class="home-todo-content">
+                                <span id="all-todo-num">0</span><span style="transform: translateY(3px)">件</span>
+                            </div>
+                        </div>
+                        <div class="home-block" style="width: 50%">
+                            <div class="home-todo-title">紧急代办事项</div>
+                            <div class="home-todo-content">
+                                <span id="em-todo-num">0</span><span style="transform: translateY(3px)">件</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="home-block home-with_padding">
+                    <div class="home-block" style="width: 50%">
+                        <div class="home-panel">
+                            <div class="home-title">工作台账</div>
+                            <ol class="home-block" id="book-left"></ol>
+                        </div>
+                    </div>
+                    <div class="home-block" style="width: 50%">
+                        <div class="home-panel">
+                            <div class="home-title"> <a href="" class="home-more">更多</a></div>
+                            <ol class="home-block" id="book-right"></ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-block" style="width: 30%">
+                <div class="home-block home-with_padding" style="height: 50%">
+                    <div class="home-panel">
+                        <div class="home-title">提醒 <a href="" class="home-more">更多</a></div>
+                        <ol class="home-block" id="warning"></ol>
+                    </div>
+                </div>
+                <div class="home-block home-with_padding" style="height: 50%">
+                    <div class="home-panel">
+                        <div class="home-title">通知公告 <a href="" class="home-more">更多</a></div>
+                        <ol class="home-block" id="announce"></ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- <meta name="decorator" content="common_top_withfun" /> -->
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/theme/js/miniUI37/miniui.js"></script>
+    <script src="/dist/index.umd.js"></script>
+
+
+    <!-- miniUI 样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/js/miniUI37/themes/default/miniui.css">
+    <!-- 字体图标 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/iconfont/iconfont.css">
+    <!-- 样式重置 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/reset.css">
+    <!-- 全局样式 -->
+    <link rel="stylesheet" type="text/css" href="/theme/css/globe.css">
+
+    <!-- 下拉菜单按钮组件 -->
+    <script src='/gbrm/component/popList.shelf.js' class="shelf-popList"></script>
+    <script src='/gbrm/component/menuBtn.shelf.js' class="shelf-menuBtn"></script>
+    <script src='/gbrm/component/modal.shelf.js' class="shelf-modal"></script>
+    <script src='/gbrm/component/detailSelect.shelf.js' class="shelf-detailSelect"></script>
+
+    <script src="./list_table.js"></script>
+
+    <title>已登记人员</title>
+
+</head>
+
+<body>
+    <div class="globe with_head">
+        <div class="head">
+            <div class="row">
+                <label class="gb_form">上一环节：</label>
+
+                <select class="gb_form">
+                    <option value="1">所有会议</option>
+                    <option value="1">部长会议</option>
+                </select>
+
+
+                <label class="gb_form">姓名：</label>
+
+                <input type="text" class="gb_form" autocomplete="false">
+
+                <a class="block_btn">查询</a>
+
+                <div class="unit_end">
+                    <a class="block_btn">职务调整</a>
+                    <a class="block_btn">取消登记</a>
+                    <a id="output_btn" class="block_btn">输出<i style="float: right"
+                            class="iconfont icon-expandmore"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <table class="list_table">
+                <tbody id="table-list">
+                    <tr class="control_width">
+                        <td style="width: 30px"></td>
+                        <td style="width: 300px"></td>
+                        <td></td>
+                        <td style="width: 100px"></td>
+                    </tr>
+                    <tr class="table_head">
+                        <th>序<br>号</td>
+                        <th>干部任免信息</td>
+                        <th>考察流程</td>
+                        <th>操作</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        .user_flow>div {
+            height: 48px;
+            line-height: 40px;
+            float: left;
+            width: 150px;
+            padding: 3px 8px;
+            margin: 5px;
+            box-shadow: 0 2px 3px 0 #ccc;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .user_flow>div>div {
+            height: 20px;
+            line-height: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .user_btns{
+            text-align: center;
+        }
+        
+        .user_btns .block_btn{
+            margin:  3px 0;
+        }
+
+    </style>
+    <table class="template" style="display: none">
+        <tbody id="table-line">
+            <tr>
+                <td>${index}</td>
+                <td>
+                    <img style="height:132px;width:100px;margin:4px;float:left" src="${img_src}">
+                    <div style="padding: 4px 0"><a href="${href}">${name}</a></div>
+                    <div style="padding: 4px 0">任职类型：${takeType}</div>
+                    <div style="padding: 4px 0">免职类型：${removeType}</div>
+                    <div style="padding: 4px 0">现任职务：${duty}</div>
+                    <div style="padding: 4px 0">拟任免事项：${matter}</div>
+                </td>
+                <td class="user_flow"></td>
+                <td class="user_btns"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

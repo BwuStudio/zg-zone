@@ -11,11 +11,11 @@
     <link rel="stylesheet" type="text/css" href="../script/miniUI37/themes/default/miniui.css">
     <script src="../../dist/index.umd.js"></script>
     <script src='../component/modal.shelf.js' class="shelf-modal"></script>
+    <script src='../component/info.shelf.js' class="shelf-info"></script>
     <script src='../component/detailSelect.shelf.js' class="shelf-detailSelect"></script>
 
     <title>Document</title>
     <script>
-
         var api = Api(function (ajax) {
             return {
                 getData: function () {
@@ -51,60 +51,81 @@
             }
         })
 
-        Shelf.done().then(function () {
+        var globe = Scope({
+            form0: null,
+            form1: null,
+            grid: null,
+        })
 
-            mini.parse()
+        globe.def('initForm', function (scope) {
 
-            document.body.querySelector('#grid_add').onclick = function () {
-                showSQRForm(null, function (data) {
+            scope({
+                form0: Form({
+                    'birth': Form.Date({ request: true }),
+                    'status': Form.Select(),
+                    'sex': Form.Checkbox(),
+                    'tele': Form.Text(),
+                    'name': Form.Text(),
+                    'phone': Form.Text(),
+                    'minzu': Form.Radio(),
+                    'px_start': Form.Date({ request: true }),
+                    'px_end': Form.Date({ request: true }),
+                    'unit': Form.DetailSelect({ table: 'zb02' }),
+                    'person': Form.AutoComplete({
+                        url:"./people.json",onchange:function(e){
+                            if(e.selected){
+                                scope().form0.person.setValue([
+                                    e.selected.id,
+                                    e.selected.name
+                                ])
+                            }else{
+                                scope().form0.person.setValue(null)
+                            }
+                        }}),
+                }, document.querySelector('#sqr')),
+                form1: Form({
+                    'birth': Form.Date({ request: true,readonly: true  }),
+                    'status': Form.Select({ readonly: true }),
+                    'sex': Form.Checkbox({ readonly: true }),
+                    'tele': Form.Text({ readonly: true }),
+                    'name': Form.Text({ readonly: true }),
+                    'phone': Form.Text({ readonly: true }),
+                    'minzu': Form.Radio({ readonly: true }),
+                    'px_start': Form.Date({ request: true,readonly: true }),
+                    'px_end': Form.Date({ request: true,readonly: true }),
+                    'unit': Form.DetailSelect({ table: 'zb02',readonly: true }),
+                    'person': Form.AutoComplete({readonly:true}),
+                }, document.querySelector('#peiou'))
+            })
 
-                    mini.get('datagrid1').setData(
-                        [data].concat(mini.get('datagrid1').getData())
-                    )
+            console.log(scope())
+        })
+
+        globe.def('initGrid', function (scope) {
+            var grid = mini.get('datagrid1')
+            function opreater(data, index) {
+                return Dom.async('<div><a class="inline_btn edit_btn">修改</a><a class="inline_btn delete_btn">删除</a></div>', function (dom) {
+                    dom.querySelector('.edit_btn').onclick = function () {
+                        showSQRForm(data, function (data) {
+                            Shelf.get('info').warn('已经更新数据！');
+
+                        })
+                    }
+                    dom.querySelector('.delete_btn').onclick = function () {
+                        mini.get('datagrid1').setData(
+                            mini.get('datagrid1').getData().filter(function (v, i) {
+                                return i !== index
+                            })
+                        )
+                    }
+
                 })
             }
-            document.body.querySelector('#grid_delete').onclick = function () {
-                var s = mini.get('datagrid1').getSelecteds()
-                if (!s.length) return alert('请选择人员')
 
-                mini.get('datagrid1').setData(
-                    mini.get('datagrid1').getData().filter(function (v) {
-                        return s.find(function (m) { return s === v })
-                    })
-                )
-            }
-            var form = Form({
-                'birth': Form.Date({ request: true }),
-                'status': Form.Select(),
-                'sex': Form.Checkbox(),
-                'tele': Form.Text(),
-                'name': Form.Text(),
-                'phone': Form.Text(),
-                'minzu': Form.Radio(),
-                'px_start': Form.Date({ request: true }),
-                'px_end': Form.Date({ request: true }),
-                'unit': Form.DetailSelect({ table: 'zb02' }),
-            }, document.body.querySelector('#sqr'))
+            scope({ grid: grid })
 
-            var form1 = Form({
-                'birth': Form.Date({ request: true }),
-                'status': Form.Select(),
-                'sex': Form.Checkbox(),
-                'tele': Form.Text(),
-                'name': Form.Text(),
-                'phone': Form.Text(),
-                'minzu': Form.Radio(),
-                'px_start': Form.Date({ request: true }),
-                'px_end': Form.Date({ request: true }),
-                'unit': Form.DetailSelect({ table: 'zb02' }),
-            }, document.body.querySelector('#peiou'))
-
-            document.body.querySelector('#print').onclick = function () {
-                alert(JSON.stringify(form.getData()))
-            }
-
-            mini.get('datagrid1').setMultiSelect(true)
-            mini.get('datagrid1').setColumns([{
+            grid.setMultiSelect(true)
+            grid.setColumns([{
                 type: 'checkcolumn'
             }, {
                 type: 'indexcolumn',
@@ -138,26 +159,10 @@
                     return v.value[1]
                 }
             }, {
-                field: 'opreate',
+                field: 'opreater',
                 header: "操作",
                 renderer: function (arg) {
-                    var row_data = arg.row
-                    var row_index = arg.rowIndex
-                    return Dom.async('<div><a class="inline_btn edit_btn">修改</a><a class="inline_btn delete_btn">删除</a></div>', function (dom) {
-                        dom.querySelector('.edit_btn').onclick = function () {
-                            showSQRForm(row_data, function (data) {
-                                alert(JSON.stringify(data))
-                            })
-                        }
-                        dom.querySelector('.delete_btn').onclick = function () {
-                            mini.get('datagrid1').setData(
-                                mini.get('datagrid1').getData().filter(function (v, i) {
-                                    return i !== row_index
-                                })
-                            )
-                        }
-
-                    })
+                    return opreater(arg.row, arg.rowIndex)
                 }
             }].map(function (v) {
                 v.headerAlign = v.headerAlign || 'center'
@@ -173,63 +178,81 @@
                 status: [001, '已解决']
             }])
 
-            api.getData().then(function (data) {
+        })
 
-                form.setData(data)
+        globe.def('initBtns', function (scope) {
+            var grid = scope().grid
+            var form = scope().form0
 
-                if (!form.birth.getValue()) {
-                    form.birth.setValue('2017-7-1')
-                }
-                console.log(form)
-
-                form.status.setOpions({
-                    '001': '选项1',
-                    '002': '选项2',
-                    '003': '选项3',
-                    '004': '选项4',
+            document.querySelector('#grid_add').onclick = function () {
+                showSQRForm(null, function (data) {
+                    grid.setData(
+                        [data].concat(grid.getData())
+                    )
                 })
-                form.sex.setOpions({
-                    '001': '男',
-                    '002': '女'
-                })
-                form.minzu.setOpions({
-                    '001': '汉族',
-                    '002': '其他少数民族'
-                })
+            }
+            document.querySelector('#grid_delete').onclick = function () {
+                var s = grid.getSelecteds()
+                if (!s.length) return Shelf.get('info').alert('请选择人员')
 
-            })
+                grid.setData(
+                    grid.getData().filter(function (v) {
+                        return s.find(function (m) { return s === v })
+                    })
+                )
+            }
 
-            api.getData1().then(function (data) {
-
-                form1.setData(data)
-
-                if (!form1.birth.getValue()) {
-                    form1.birth.setValue('2017-7-1')
-                }
-                console.log(form1)
-
-                form1.status.setOpions({
-                    '001': '选项1',
-                    '002': '选项2',
-                    '003': '选项3',
-                    '004': '选项4',
-                })
-                form1.sex.setOpions({
-                    '001': '男',
-                    '002': '女'
-                })
-                form1.minzu.setOpions({
-                    '001': '汉族',
-                    '002': '其他少数民族'
-                })
-
-            })
-
-            window.getData = function () {
-                return form.getData()
+            document.querySelector('#open').onclick = function () {
+                globe.run('openOuterForm')
+            }
+            document.querySelector('#print').onclick = function () {
+                console.log(form.getData())
+                Shelf.get('info').warn('数据已经打印至控制台！！！')
             }
         })
 
+        globe.def('loadData', function (scope, data) {
+            var form0 = scope().form0
+            var form1 = scope().form1
+
+                ;[form0, form1].forEach(function (form) {
+                    form.setData(data)
+
+                    form.status.setOpions({
+                        '001': '选项1',
+                        '002': '选项2',
+                        '003': '选项3',
+                        '004': '选项4',
+                    })
+                    form.sex.setOpions({
+                        '001': '男',
+                        '002': '女'
+                    })
+                    form.minzu.setOpions({
+                        '001': '汉族',
+                        '002': '其他少数民族'
+                    })
+                })
+        })
+
+        globe.def('openOuterForm', function (scope) {
+            Shelf.get('modal').openUrl('./form_demo_inner.html', {
+                title: '新窗口'
+            })
+        })
+
+        Shelf.done().then(function () {
+
+            mini.parse()
+
+            globe.run('initForm')
+            globe.run('initGrid')
+            globe.run('initBtns')
+
+            api.getData().then(function (data) {
+                globe.run('loadData', data)
+            })
+        })
 
         function showSQRForm(data, cb) {
             var modal = Shelf.get('modal').open(
@@ -282,7 +305,7 @@
                 <div class="unit_end">
                     <a id="print" class="block_btn">打印</a>
                     <a href="" class="block_btn disabled">保存</a>
-                    <a href="" class="block_btn white">修改</a>
+                    <a id="open" class="block_btn white">打开表单窗口</a>
                     <a href="" class="block_btn">关闭</a>
                 </div>
             </div>
@@ -322,6 +345,8 @@
                     <div class="row">
                         <label class="col-2">主管单位:</label>
                         <div class="col-4" data-name-unit></div>
+                        <label class="col-2">审批人:</label>
+                        <div class="col-4" data-name-person></div>
                     </div>
                 </fieldset>
                 <fieldset id="peiou">
@@ -357,6 +382,8 @@
                     <div class="row">
                         <label class="col-2">主管单位:</label>
                         <div class="col-4" data-name-unit></div>
+                        <label class="col-2">审批人:</label>
+                        <div class="col-4" data-name-person></div>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -365,8 +392,8 @@
                         <div class="mini-datagrid-bar">
                             <div class="row">
                                 <div class="unit_end">
-                                    <a id="grid_add" class="block_btn">新增</a>
-                                    <a id="grid_delete" class="block_btn">批量删除</a>
+                                    <a id="grid_add" class="inline_btn">新增</a>
+                                    <a id="grid_delete" class="inline_btn">批量删除</a>
                                 </div>
                             </div>
                         </div>

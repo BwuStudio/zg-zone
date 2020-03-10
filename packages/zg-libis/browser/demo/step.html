@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="../script/miniUI37/miniui.js"></script>
+    <link rel="stylesheet" type="text/css" href="../icon/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../script/miniUI37/themes/default/miniui.css">
+    <script src="../../dist/index.umd.js"></script>
+    <script src='../component/step.shelf.js' class="shelf-step"></script>
+</head>
+<body>
+    <div class="globe">
+        <div class="body">
+            <div id="step"></div>
+        </div>
+    </div>
+    <script>
+        Shelf.done().then(function(){
+            window.a =Shelf.get('step')(
+                document.querySelector("#step"),{
+                    list:[{
+                        id: 0,
+                        title: " 步骤一",
+                    }, {
+                        id: 1,
+                        title: " 步骤二",
+                    }, {
+                        id: 2,
+                        title: " 步骤三",
+                    }, {
+                        id: 3,
+                        title: " 步骤四",
+                    }],
+                    target:2
+                }
+            )
+        })
+    </script>
+</body>
+</html>

@@ -1,33 +1,40 @@
-import Input from "./Input";
+import Input, { Conf } from "./Input";
 
 declare const mini: any
 
-export default class Text extends Input<string>{
+type Config = {
+    readonly: boolean
+}
+
+export default class Date extends Input<string, Config>{
 
 
-    static gen(s: string, config: {
-        container: HTMLElement
-    }) {
-        return new this(s, config.container)
+    static gen(s: string, config: Conf<Config>) {
+        return new this(s, config)
     }
 
-    constructor(id: string, container: HTMLElement) {
-        super(id, container)
-        this.uid = Math.floor(Math.random()*10000).toString()
+    static config = {
+        readonly: false
+    }
+
+    constructor(id: string, config: Conf<Config>) {
+
+        super(
+            id,
+            Object.assign(
+                {},
+                Date.config,
+                config))
+
+        this.uid = Math.floor(Math.random() * 10000).toString()
         this.reflashView()
     }
 
     private target: any = null
 
-    private uid:string
+    private uid: string
 
     protected reflashView() {
-        // const id = 'mymini-' + this.id
-        // this.container.innerHTML = `<input class="mini-datepicker" id="${id}">`
-        // mini.parse(id)
-        // this.target = mini.get(id)
-
-
         const id = 'mymini-' + this.id + this.uid
         console.log(id)
 
@@ -45,6 +52,11 @@ export default class Text extends Input<string>{
 
         this.target = mini.get(id)
 
+        if (this.config.readonly) {
+            this.target.disable()
+        }
+
+        this.target.setDataField('Data')
         this.target.onValueChanged(() => {
             this.setValue(this.target.getFormValue())
         })

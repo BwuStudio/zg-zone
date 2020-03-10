@@ -64,22 +64,22 @@ Shelf.define({
             t.setDataField('Data')
             t.setValueField('DMCOD')
             t.setTextField('DMCPT')
-            t.onValueChanged(function(c){
-                if(c.selected){
+            t.onValueChanged(function (c) {
+                if (c.selected) {
                     set(c.selected)
-                }else{
+                } else {
                     set({
-                        DMCOD:'',
-                        DMCPT:''
+                        DMCOD: '',
+                        DMCPT: ''
                     })
                 }
             })
 
-            var DMCOD = '' 
+            var DMCOD = ''
             var DMCPT = ''
-            var change =  function(t){}
-            function set(c){
-                if(!c) return 
+            var change = function (t) { }
+            function set(c) {
+                if (!c) return
                 DMCOD = c.DMCOD
                 DMCPT = c.DMCPT
 
@@ -87,32 +87,36 @@ Shelf.define({
                 t.setValue(DMCOD)
 
                 change({
-                    DMCOD:DMCOD,
-                    DMCPT:DMCPT
+                    DMCOD: DMCOD,
+                    DMCPT: DMCPT
                 })
             }
 
-            function get(){
+            function get() {
                 return {
-                    DMCOD:DMCOD,
-                    DMCPT:DMCPT
+                    DMCOD: DMCOD,
+                    DMCPT: DMCPT
                 }
             }
 
             document.getElementById(id).ondblclick = function () {
                 Shelf.get('detailSelect').lazy(table, function (v) {
-                    if(v) set(v)
+                    if (v) set(v)
                 })
             }
 
-            $('#'+id+' > span').get().forEach(function(v){
+            $('#' + id + ' > span').get().forEach(function (v) {
                 v.style.background = '#FFF6E0'
             })
 
             return {
-                getValue:get,
-                setValue:set,
-                onchange:function(fn){
+                getValue: get,
+                setValue: set,
+                disable: function () {
+                    t.disable()
+                    document.getElementById(id).dataondblclick = null
+                },
+                onchange: function (fn) {
                     change = fn || change
                 }
             }
@@ -140,7 +144,6 @@ Shelf.define({
             })
         }
     }
-
 
     var all = function () { return new Promise(function (res) { res([]) }) }
     var find = function () { return new Promise(function (res) { res([]) }) }
@@ -193,7 +196,7 @@ Shelf.define({
             all(tree)
 
             tree.on('nodeClick', function (a) {
-            	if (a.node.selectable === 'false'  ) return
+                if (a.node.selectable === 'false') return
                 node = a.node
                 $(cont).find('textarea').get(0).innerHTML = node[tree.getTextField()]
             })

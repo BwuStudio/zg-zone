@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="../script/miniUI37/miniui.js"></script>
+    <link rel="stylesheet" type="text/css" href="../script/miniUI37/themes/default/miniui.css">
+    <script src="../../dist/index.umd.js"></script>
+    <script src='../component/modal.shelf.js' class="shelf-modal"></script>
+    <script src='../component/info.shelf.js' class="shelf-info"></script>
+    <script src='../component/detailSelect.shelf.js' class="shelf-detailSelect"></script>
+
+    <title>Document</title>
+    <script>
+        var api = Api(function (ajax) {
+            return {
+                getData: function () {
+                    return new Promise(function (res) {
+                        res({
+                            name: '黎万民',
+                            birth: '1967-1-2',
+                            sex: [['001', '男']],
+                            tele: '027-87541110',
+                            minzu: ['001', '汉族'],
+                            phone: '13871085936',
+                            px_start: '2003-1-2',
+                            px_end: '2003-3-2',
+                            unit: ['2003-3-2', '']
+                        })
+                    })
+                },
+                getData1: function () {
+                    return new Promise(function (res) {
+                        res({
+                            name: '百千姓',
+                            birth: '1978-8-2',
+                            sex: [['002', '女']],
+                            tele: '027-87541110',
+                            minzu: ['002', ''],
+                            phone: '13871085936',
+                            px_start: '2003-1-2',
+                            px_end: '2003-3-2',
+                            unit: ['2003-3-2', '']
+                        })
+                    })
+                }
+            }
+        })
+
+        var globe = Scope({
+            form0: null,
+        })
+
+        globe.def('initForm', function (scope) {
+
+            scope({
+                form0: Form({
+                    'birth': Form.Date({ request: true }),
+                    'status': Form.Select(),
+                    'sex': Form.Checkbox(),
+                    'tele': Form.Text(),
+                    'name': Form.Text(),
+                    'phone': Form.Text(),
+                    'minzu': Form.Radio(),
+                    'px_start': Form.Date({ request: true }),
+                    'px_end': Form.Date({ request: true }),
+                    'unit': Form.DetailSelect({ table: 'zb02' }),
+                }, document.querySelector('#sqr'))
+            })
+
+        })
+        globe.def('initBtns', function (scope) {
+            var form = scope().form0
+
+            document.querySelector('#open').onclick = function () {
+                globe.run('openOuterForm')
+            }
+
+        })
+
+        globe.def('loadData', function (scope, data) {
+            var form = scope().form0
+
+            form.setData(data)
+
+            form.status.setOpions({
+                '001': '选项1',
+                '002': '选项2',
+                '003': '选项3',
+                '004': '选项4',
+            })
+            form.sex.setOpions({
+                '001': '男',
+                '002': '女'
+            })
+            form.minzu.setOpions({
+                '001': '汉族',
+                '002': '其他少数民族'
+            })
+
+        })
+
+        globe.def('openOuterForm', function (scope) {
+            Shelf.get('modal').openUrl('./step.html', {
+                title: '新窗口'
+            })
+        })
+
+        Shelf.done().then(function () {
+
+            mini.parse()
+
+            globe.run('initForm')
+            globe.run('initBtns')
+
+            api.getData().then(function (data) {
+                globe.run('loadData', data)
+            })
+        })
+
+        function showSQRForm(data, cb) {
+            var modal = Shelf.get('modal').open(
+                Dom(
+                    document.getElementById('l_form').innerHTML,
+                    function (dom) {
+
+                        var form = Form({
+                            'time': Form.Date({ request: true }),
+                            'name': Form.Text(),
+                            'idnum': Form.Text(),
+                            'content': Form.Text(),
+                            'place': Form.Text(),
+                            'status': Form.Select(),
+                        }, dom)
+
+                        dom.querySelector('.save_btn').onclick = function () {
+                            if (cb) cb(form.getData())
+                            modal.emit('close')
+                        }
+
+                        dom.querySelector('.cancel_btn').onclick = function () {
+                            modal.emit('close')
+                        }
+
+                        if (data)
+                            form.setData(data)
+
+                        form.status.setOpions({
+                            '001': '已解决',
+                            '002': '选项2',
+                            '003': '选项3',
+                            '004': '选项4',
+                        })
+
+                    }), {
+                width: 360,
+                height: 480,
+                title: '编辑详情'
+            })
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="globe">
+        <div class="head">
+            <div class="row">
+                <div class="unit_end">
+                    <a id="print" class="block_btn">打印</a>
+                    <a href="" class="block_btn disabled">保存</a>
+                    <a id="open" class="block_btn white">打开表单窗口</a>
+                    <a href="" class="block_btn">关闭</a>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <form class="common">
+                <fieldset id="sqr">
+                    <legend>申请人信息</legend>
+                    <div class="row">
+                        <label class="col-2">申请人姓名:</label>
+                        <div class="col-4" data-name-name></div>
+                        <label class="col-2">出生日期:</label>
+                        <div class="col-4" data-name-birth></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">民族:</label>
+                        <div class="col-4" data-name-minzu></div>
+                        <label class="col-2">电话:</label>
+                        <div class="col-4" data-name-tele></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">申请人性别:</label>
+                        <div class="col-4" data-name-sex></div>
+                        <label class="col-2">手机号:</label>
+                        <div class="col-4" data-name-phone></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">任职状态:</label>
+                        <div class="col-4" data-name-status></div>
+                        <label class="col-2">培训日期:</label>
+                        <div class="col-4 flex-row">
+                            <div style="flex: 1;" data-name-px_start></div>
+                            <b>至</b>
+                            <div style="flex: 1;" data-name-px_end></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2">主管单位:</label>
+                        <div class="col-4" data-name-unit></div>
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+
+
+</html>

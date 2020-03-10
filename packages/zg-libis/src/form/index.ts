@@ -1,13 +1,11 @@
 import * as Input from './input'
 
 class FormVM<T>{
-    private c: { [P in keyof T]: Input.Input<T[P]> }
+    private c: { [P in keyof T]: Input.Input<T[P],any> }
 
-    constructor(c: { [P in keyof T]: Input.Input<T[P]> }) {
+    constructor(c: { [P in keyof T]: Input.Input<T[P],any> }) {
         this.c = c
     }
-
-
 
     getData() {
         return (
@@ -32,7 +30,7 @@ class FormVM<T>{
 }
 
 function Form<T>(
-    v: { [P in keyof T]: (id: string, container: HTMLElement) => Input.Input<T[P]> },
+    v: { [P in keyof T]: (id: string, container: HTMLElement) => Input.Input<T[P],any> },
     ele: HTMLElement = document.body) {
 
     const c = Object.keys(v).reduce<any>((res, key) => {
@@ -43,7 +41,7 @@ function Form<T>(
         )
 
         return res
-    }, {}) as { [P in keyof T]: Input.Input<T[P]> }
+    }, {}) as { [P in keyof T]: Input.Input<T[P],any> }
 
     return Object.assign(new FormVM(c), c)
 }
