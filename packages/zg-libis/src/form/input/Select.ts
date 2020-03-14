@@ -53,6 +53,13 @@ export default class Select extends Input<[Value, Text], Config>{
 
         this.target.innerHTML = ''
         this.target.innerHTML = this.list.map(v => `<option value="${v.value}">${v.text}</option>`).join('')
+
+        this.value = this.value
+            || (this.list[0]
+                ? [this.list[0].value, this.list[0].text]
+                : null)
+
+        this.target.value = this.value?.[0] || ''
     }
 
     setValue(v: [Value, Text] | null) {

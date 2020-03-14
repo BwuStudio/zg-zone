@@ -29,6 +29,7 @@
                             phone: '13871085936',
                             px_start: '2003-1-2',
                             px_end: '2003-3-2',
+                            status: ['002', '选项2'],
                             unit: ['2003-3-2', '']
                         })
                     })
@@ -72,29 +73,30 @@
                     'px_end': Form.Date({ request: true }),
                     'unit': Form.DetailSelect({ table: 'zb02' }),
                     'person': Form.AutoComplete({
-                        url:"./people.json",onchange:function(e){
-                            if(e.selected){
+                        url: "./people.json", onchange: function (e) {
+                            if (e.selected) {
                                 scope().form0.person.setValue([
                                     e.selected.id,
                                     e.selected.name
                                 ])
-                            }else{
+                            } else {
                                 scope().form0.person.setValue(null)
                             }
-                        }}),
+                        }
+                    }),
                 }, document.querySelector('#sqr')),
                 form1: Form({
-                    'birth': Form.Date({ request: true,readonly: true  }),
+                    'birth': Form.Date({ request: true, readonly: true }),
                     'status': Form.Select({ readonly: true }),
                     'sex': Form.Checkbox({ readonly: true }),
                     'tele': Form.Text({ readonly: true }),
                     'name': Form.Text({ readonly: true }),
                     'phone': Form.Text({ readonly: true }),
                     'minzu': Form.Radio({ readonly: true }),
-                    'px_start': Form.Date({ request: true,readonly: true }),
-                    'px_end': Form.Date({ request: true,readonly: true }),
-                    'unit': Form.DetailSelect({ table: 'zb02',readonly: true }),
-                    'person': Form.AutoComplete({readonly:true}),
+                    'px_start': Form.Date({ request: true, readonly: true }),
+                    'px_end': Form.Date({ request: true, readonly: true }),
+                    'unit': Form.DetailSelect({ table: 'zb02', readonly: true }),
+                    'person': Form.AutoComplete({ readonly: true }),
                 }, document.querySelector('#peiou'))
             })
 
@@ -214,25 +216,25 @@
         globe.def('loadData', function (scope, data) {
             var form0 = scope().form0
             var form1 = scope().form1
+                ;
+            [form0, form1].forEach(function (form) {
+                form.setData(data)
 
-                ;[form0, form1].forEach(function (form) {
-                    form.setData(data)
-
-                    form.status.setOpions({
-                        '001': '选项1',
-                        '002': '选项2',
-                        '003': '选项3',
-                        '004': '选项4',
-                    })
-                    form.sex.setOpions({
-                        '001': '男',
-                        '002': '女'
-                    })
-                    form.minzu.setOpions({
-                        '001': '汉族',
-                        '002': '其他少数民族'
-                    })
+                form.status.setOpions({
+                    '001': '选项1',
+                    '002': '选项2',
+                    '003': '选项3',
+                    '004': '选项4',
                 })
+                form.sex.setOpions({
+                    '001': '男',
+                    '002': '女'
+                })
+                form.minzu.setOpions({
+                    '001': '汉族',
+                    '002': '其他少数民族'
+                })
+            })
         })
 
         globe.def('openOuterForm', function (scope) {

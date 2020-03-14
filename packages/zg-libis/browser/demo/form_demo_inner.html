@@ -16,40 +16,6 @@
 
     <title>Document</title>
     <script>
-        var api = Api(function (ajax) {
-            return {
-                getData: function () {
-                    return new Promise(function (res) {
-                        res({
-                            name: '黎万民',
-                            birth: '1967-1-2',
-                            sex: [['001', '男']],
-                            tele: '027-87541110',
-                            minzu: ['001', '汉族'],
-                            phone: '13871085936',
-                            px_start: '2003-1-2',
-                            px_end: '2003-3-2',
-                            unit: ['2003-3-2', '']
-                        })
-                    })
-                },
-                getData1: function () {
-                    return new Promise(function (res) {
-                        res({
-                            name: '百千姓',
-                            birth: '1978-8-2',
-                            sex: [['002', '女']],
-                            tele: '027-87541110',
-                            minzu: ['002', ''],
-                            phone: '13871085936',
-                            px_start: '2003-1-2',
-                            px_end: '2003-3-2',
-                            unit: ['2003-3-2', '']
-                        })
-                    })
-                }
-            }
-        })
 
         var globe = Scope({
             form0: null,
@@ -76,16 +42,22 @@
         globe.def('initBtns', function (scope) {
             var form = scope().form0
 
-            document.querySelector('#open').onclick = function () {
-                globe.run('openOuterForm')
+            document.querySelector('.cancel_btn').onclick = function(){
+                Msger(window.above).emit('close')
             }
-
+            document.querySelector('.save_btn').onclick = function(){
+                Msger(window.above).emit('saveData',[form.getData()])
+                Msger(window.above).emit('close')
+            }
         })
 
-        globe.def('loadData', function (scope, data) {
+        globe.def('loadData', function (scope) {
             var form = scope().form0
 
+            const data = Msger(window.above).emit('getData') || {}
+
             form.setData(data)
+
 
             form.status.setOpions({
                 '001': '选项1',
@@ -116,70 +88,16 @@
 
             globe.run('initForm')
             globe.run('initBtns')
-
-            api.getData().then(function (data) {
-                globe.run('loadData', data)
-            })
+            globe.run('loadData')
         })
-
-        function showSQRForm(data, cb) {
-            var modal = Shelf.get('modal').open(
-                Dom(
-                    document.getElementById('l_form').innerHTML,
-                    function (dom) {
-
-                        var form = Form({
-                            'time': Form.Date({ request: true }),
-                            'name': Form.Text(),
-                            'idnum': Form.Text(),
-                            'content': Form.Text(),
-                            'place': Form.Text(),
-                            'status': Form.Select(),
-                        }, dom)
-
-                        dom.querySelector('.save_btn').onclick = function () {
-                            if (cb) cb(form.getData())
-                            modal.emit('close')
-                        }
-
-                        dom.querySelector('.cancel_btn').onclick = function () {
-                            modal.emit('close')
-                        }
-
-                        if (data)
-                            form.setData(data)
-
-                        form.status.setOpions({
-                            '001': '已解决',
-                            '002': '选项2',
-                            '003': '选项3',
-                            '004': '选项4',
-                        })
-
-                    }), {
-                width: 360,
-                height: 480,
-                title: '编辑详情'
-            })
-        }
 
     </script>
 </head>
 
 <body>
-    <div class="globe">
-        <div class="head">
-            <div class="row">
-                <div class="unit_end">
-                    <a id="print" class="block_btn">打印</a>
-                    <a href="" class="block_btn disabled">保存</a>
-                    <a id="open" class="block_btn white">打开表单窗口</a>
-                    <a href="" class="block_btn">关闭</a>
-                </div>
-            </div>
-        </div>
+    <div class="globe">     
         <div class="body">
-            <form class="common">
+            <form class="mini" style="width: 100%;">
                 <fieldset id="sqr">
                     <legend>申请人信息</legend>
                     <div class="row">
@@ -217,6 +135,14 @@
                 </fieldset>
             </form>
 
+        </div>
+        <div class="foot">
+            <div class="row">
+                <div class="btn_group center">
+                    <a class="block_btn save_btn">保存</a>
+                    <a class="block_btn cancel_btn">取消</a>
+                </div>
+            </div>
         </div>
     </div>
 
